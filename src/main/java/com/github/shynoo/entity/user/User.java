@@ -40,7 +40,13 @@ public class User{
             }
         }
         return true;
-            
+    }
+    
+    public boolean couldManageUser(){
+        if (userType.isAllowManageUsers()){
+            return true;
+        }
+        return false;
     }
     
 }

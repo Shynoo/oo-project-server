@@ -8,4 +8,5 @@ public class Admin extends User{
         return new UserBuilder().type(UserType.ADMIN);
     }
     
+    
 }

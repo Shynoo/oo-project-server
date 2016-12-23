@@ -24,7 +24,8 @@ public class Book{
     public User getReader(){
         if (this.bookStatus==BookStatus.BORROWING_OUT)
             return this.user;
-        else throw new RuntimeException("This Book Not Borrowing Out");
+        
+        return null;
     }
     
     public static BookBuilder newBuilder(){

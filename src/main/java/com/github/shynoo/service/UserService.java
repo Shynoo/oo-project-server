@@ -18,7 +18,6 @@ public class UserService{
     @Autowired
     private BookDao bookDao;
     
-    
     public Result userLogIn(String id, String password){
         
         String realPasswd=userDao.getUserPassword(id);
@@ -34,6 +33,7 @@ public class UserService{
         
     }
     
+    
     public Result addUser(User user,User newUser){
         
         if (user.getUserType().isAllowManageUsers()){
@@ -43,6 +43,7 @@ public class UserService{
         return new Result(ResultStatus.FAILURE);
         
     }
+    
     
     public Result deletUser(User user,User delUser){
         try{
@@ -57,12 +58,18 @@ public class UserService{
         return new Result(ResultStatus.FAILURE);
     }
     
+    
     public ResultStatus addBook(User user, Book book){
         if (user.getUserType().isAllowAddBooks()){
             bookDao.addBook(book);
             return ResultStatus.SUCCESS;
         }
         return ResultStatus.FAILURE;
+    }
+    
+    
+    public boolean checkUserCouldBorrowBook(User user){
+        return user.couldBorrowNewBook();
     }
     
     

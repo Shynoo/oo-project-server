@@ -14,10 +14,8 @@ public enum BookType{
     
     
     BookType(long id,String typeName){
-        
         this.id=id;
         this.typeName=typeName;
-        
     }
     
     
