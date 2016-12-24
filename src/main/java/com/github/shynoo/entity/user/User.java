@@ -49,4 +49,16 @@ public class User{
         return false;
     }
     
+    public boolean borrowBook(Book book){
+        if (!couldBorrowNewBook()){
+            return false;
+        }
+        borrowingBooks.add(book);
+        return true;
+    }
+    
+    public boolean giveBackBook(Book book){
+        borrowingBooks.remove(book);
+        return true;
+    }
 }

@@ -69,4 +69,17 @@ public class LocalBookDao implements BookDao{
         }
         return list;
     }
+    
+    @Override
+    public ResultStatus delBook(Book book){
+        books.remove(book.getBookId(),book);
+        try{
+            nameToBook.get(book.getName()).remove(book);
+            return ResultStatus.SUCCESS;
+        }catch(NullPointerException e){
+            return ResultStatus.SUCCESS;
+        }
+    }
+    
+    
 }
