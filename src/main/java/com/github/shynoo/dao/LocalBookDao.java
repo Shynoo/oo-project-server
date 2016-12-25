@@ -21,6 +21,28 @@ public class LocalBookDao implements BookDao{
     public LocalBookDao(){
         books=new ConcurrentHashMap<>();
         nameToBook =new ConcurrentHashMap<>();
+        initData();
+    }
+    
+    private void initData(){
+        
+        Book book;
+        book=Book.newBuilder().id("CS1021").name("算法导论").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book=Book.newBuilder().name("细胞结构分析").type(BookType.BIOLOGY).build();addBook(book);
+        book=Book.newBuilder().name("数值分析").type(BookType.MATH).build();addBook(book);
+        book=Book.newBuilder().name("常用英语语法").type(BookType.ENGLISH).build();addBook(book);
+        book=Book.newBuilder().name("力学分析").type(BookType.PHYSICS).build();addBook(book);
+        book=Book.newBuilder().name("有机化学基础").type(BookType.CHEMISTRY).build();addBook(book);
+        book=Book.newBuilder().name("数据结构与算法").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book=Book.newBuilder().name("无机化学入门").type(BookType.CHEMISTRY).build();addBook(book);
+        book=Book.newBuilder().name("Java从入门到放弃").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book=Book.newBuilder().name("精通C++").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book=Book.newBuilder().name("物理化学基础").type(BookType.CHEMISTRY).build();addBook(book);
+        book=Book.newBuilder().name("活着的细胞").type(BookType.BIOLOGY).build();addBook(book);
+        book=Book.newBuilder().name("量子力学").type(BookType.PHYSICS).build();addBook(book);
+        book=Book.newBuilder().name("高等数学基础").type(BookType.MATH).build();addBook(book);
+        
+    
     }
     
     @Override

@@ -1,16 +1,13 @@
 package com.github.shynoo.entity.book;
 
-import java.util.Map;
-
 public enum BookType{
     
-    MATH(0,"Math"),ENGLISH(2,"English"),BIOLOGY(5,"Biology"),CHEMISTRY(4,"Chemistry"),PHYSICS(3,"Physics");
+    MATH(0,"MA"),ENGLISH(2,"EN"),BIOLOGY(5,"BIO"),CHEMISTRY(4,"CHE"),PHYSICS(3,"PHY"),COMPUTER_SCIENCE(10,"CS");
     
     public final long id;
     
     public final String typeName;
     
-    static Map<Long,BookType> bookTypeMap;
     
     
     BookType(long id,String typeName){

@@ -15,7 +15,7 @@ public class Book{
     
     private BookType bookType;
     
-    private BookStatus bookStatus;
+    private BookStatus bookStatus=BookStatus.IN_LIBIRARY;
     
     private User user;
     

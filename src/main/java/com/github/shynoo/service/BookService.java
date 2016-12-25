@@ -29,7 +29,7 @@ public class BookService{
         return bookDao.getBookById(id);
     }
     
-    public String generateBookId(Book book){
-        return (""+book.hashCode()).substring(0,16);
+    public static String generateBookId(Book book){
+        return (book.getBookType().typeName+book.hashCode()).substring(0,16);
     }
 }
