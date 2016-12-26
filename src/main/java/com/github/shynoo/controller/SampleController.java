@@ -73,7 +73,13 @@ public class SampleController {
     @RequestMapping("user/{account}/books")
     List<Book> getBooks(@PathVariable String account) {
         User user = (User) userService.getUserById(account).object;
-        return user.getBorrowingBooks();
+        List<Book> books = user.getBorrowingBooks();
+        System.out.println(books);
+        System.out.println(books.size());
+        for (Book book : books) {
+            System.out.println(book.getName());
+        }
+        return books;
     }
 
     @RequestMapping("search")
