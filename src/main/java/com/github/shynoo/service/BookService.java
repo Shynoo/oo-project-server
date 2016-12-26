@@ -28,5 +28,8 @@ public class BookService{
         return bookDao.getBookById(id);
     }
     
+    public Book getRandomBook(){
+        return bookDao.getRandomBook();
+    }
     
 }

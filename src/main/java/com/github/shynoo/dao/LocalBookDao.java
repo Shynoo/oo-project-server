@@ -24,7 +24,8 @@ public class LocalBookDao implements BookDao{
         initData();
     }
     
-    private void initData(){
+    @Override
+    public void initData(){
         
         Book book;
         book = Book.newBuilder().id("CS1021").name("算法导论").type(BookType.COMPUTER_SCIENCE).build();

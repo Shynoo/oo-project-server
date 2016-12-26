@@ -20,6 +20,11 @@ public class SystemController{
     @Autowired
     private BookService bookService;
     
+    
+    SystemController(){
+        
+    }
+    
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Result logIn(@RequestParam String id, @RequestParam String password
 //        ,HttpServletResponse response

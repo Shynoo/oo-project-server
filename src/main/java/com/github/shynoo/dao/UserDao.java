@@ -1,7 +1,6 @@
 package com.github.shynoo.dao;
 
 
-import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
 
@@ -15,5 +14,5 @@ public interface UserDao{
     
     ResultStatus deleteUser(User user);
     
-    
+    void initData();
 }
