@@ -5,6 +5,7 @@ import com.github.shynoo.util.DateUtil;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -18,7 +19,7 @@ public class User{
     
     public UserType userType;
     
-    private List<Book> borrowingBooks;
+    private List<Book> borrowingBooks=new LinkedList<>();
     
     private final static UserFactory factory = new UserFactory();
     
@@ -31,6 +32,9 @@ public class User{
     }
     
     public boolean couldBorrowNewBook(){
+        if (borrowingBooks==null){
+            return true;
+        }
         if (borrowingBooks.size() >= userType.maxBorrowingBookNumber) {
             return false;
         }

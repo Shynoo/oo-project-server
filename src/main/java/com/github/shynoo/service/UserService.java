@@ -30,7 +30,10 @@ public class UserService{
     }
     
     public Result userLogIn(String id, String password){
-        
+        if (!isInited){
+            initData();
+            isInited=true;
+        }
         String realPasswd = userDao.getUserPassword(id);
         
         if (password.equals(realPasswd)) {
@@ -45,6 +48,10 @@ public class UserService{
     }
     
     public Result getUserById(String id){
+        if (!isInited){
+            isInited=true;
+            initData();
+        }
         User user = userDao.getUserById(id);
         return new Result(ResultStatus.SUCCESS, user);
     }
@@ -94,10 +101,6 @@ public class UserService{
     boolean isInited=false;
     
     public ResultStatus borrowBook(User user, Book book){
-        if (!isInited){
-            initData();
-        }
-        
         
         if (!user.couldBorrowNewBook()) {
             return ResultStatus.FAILURE;
@@ -106,7 +109,9 @@ public class UserService{
             return ResultStatus.FAILURE;
         }
         
-        user.borrowBook(book);
+        if (!user.borrowBook(book)){
+            return ResultStatus.FAILURE;
+        }
         book.borrowOut(user);
         
         return ResultStatus.SUCCESS;
@@ -114,19 +119,21 @@ public class UserService{
     
     
     public ResultStatus giveBack(Book book){
-        book.getReader().giveBackBook(book);
+        /*
+        ** TODO
+         */
         book.giveBack();
+        //user.giveBackBook(book);
         return ResultStatus.SUCCESS;
     }
     
     public void initBorrowData(){
-        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
-        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
-        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
-        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
-        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
-        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
-        
+        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("1").get(),getRandomBook());
     }
     
     public boolean checkUserCouldBorrowBook(User user){

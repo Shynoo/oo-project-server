@@ -72,7 +72,7 @@ public class SampleController {
 
     @RequestMapping("user/{account}/books")
     List<Book> getBooks(@PathVariable String account) {
-        User user = (User) userService.getUserById(account).object;
+        User user = (User) userService.getUserById(account).get();
         List<Book> books = user.getBorrowingBooks();
         System.out.println(books);
         System.out.println(books.size());

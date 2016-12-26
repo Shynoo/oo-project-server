@@ -18,21 +18,20 @@ public class Book{
     
     private BookStatus bookStatus = BookStatus.IN_LIBIRARY;
     
-    private User user;
+//    private User user;
     
     private Date borrowedDate;
     
-    public User getReader(){
-        if (this.bookStatus == BookStatus.BORROWING_OUT)
-            return this.user;
-        
-        return null;
-    }
+//    public User getReader(){
+//        if (this.bookStatus == BookStatus.BORROWING_OUT)
+//            return this.user;
+//        return null;
+//    }
     
     public void borrowOut(User user){
         borrowedDate = new Date();
         this.bookStatus = BookStatus.BORROWING_OUT;
-        this.user = user;
+//        this.user = user;
     }
     
     public void giveBack(){
@@ -47,7 +46,11 @@ public class Book{
     
     public static String generateBookId(Book book){
 //        return (book.getBookType().typeName+book.hashCode()).substring(0, 16);
-        return book.getBookType().typeName+(new Random().nextInt(2<<12));
+        return book.getBookType().typeName+(new Random().nextInt(1<<12));
+    }
+    
+    public String toString(){
+        return "name="+name+",id="+bookId+",type="+bookType.typeName;
     }
     
 }

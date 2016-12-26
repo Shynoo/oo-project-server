@@ -21,7 +21,9 @@ public class LocalBookDao implements BookDao{
     public LocalBookDao(){
         books = new ConcurrentHashMap<>();
         nameToBook = new ConcurrentHashMap<>();
+        
         initData();
+        
     }
     
     @Override
@@ -62,13 +64,16 @@ public class LocalBookDao implements BookDao{
     
     @Override
     public ResultStatus addBook(Book book){
+        books.put(book.getBookId(),book);
+    
         Object o = nameToBook.get(book.getName());
         
         if (o == null) {
-            nameToBook.put(book.getName(), new LinkedList<Book>());
+            nameToBook.put(book.getName(), new LinkedList<>());
         }
         
         nameToBook.get(book.getName()).add(book);
+        
         
         book.setBookStatus(BookStatus.IN_LIBIRARY);
         
@@ -127,7 +132,7 @@ public class LocalBookDao implements BookDao{
                 return b;
             }
         }
-        return null;
+        throw new NullPointerException("No new Book to choose!");
     }
     
     
