@@ -40,28 +40,28 @@ public class UserService{
     }
     
     
-    public Result addUser(User user, User newUser){
+    public ResultStatus addUser(User user, User newUser){
         
         if (user.getUserType().isAllowManageUsers()) {
             ResultStatus rs = userDao.addUser(newUser);
-            return new Result(rs);
+            return rs;
         }
-        return new Result(ResultStatus.FAILURE);
+        return (ResultStatus.FAILURE);
         
     }
     
     
-    public Result deletUser(User user, User delUser){
+    public ResultStatus deletUser(User user, User delUser){
         try{
             if (user.getUserType().isAllowManageUsers()) {
-                return new Result(userDao.deleteUser(delUser));
+                return (userDao.deleteUser(delUser));
             }
         } catch(Exception e){
             
-            return new Result(ResultStatus.UNKNOWN_RESULT);
+            return (ResultStatus.UNKNOWN_RESULT);
             
         }
-        return new Result(ResultStatus.FAILURE);
+        return (ResultStatus.FAILURE);
     }
     
     
@@ -97,7 +97,7 @@ public class UserService{
     }
     
     
-    public ResultStatus dischargeBook(Book book){
+    public ResultStatus giveBack(Book book){
         book.getReader().giveBackBook(book);
         book.giveBack();
         return ResultStatus.SUCCESS;

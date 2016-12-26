@@ -7,10 +7,11 @@ import java.util.List;
 
 public class UserBuilder{
     
-    User user = new User();
+    User user;
+    
     
     UserBuilder(){
-        
+        user = new User();
     }
     
     public UserBuilder id(String o){

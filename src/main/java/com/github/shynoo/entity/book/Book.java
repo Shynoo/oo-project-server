@@ -5,6 +5,7 @@ import com.github.shynoo.entity.user.User;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Random;
 
 @Data
 public class Book{
@@ -42,6 +43,11 @@ public class Book{
     
     public static BookBuilder newBuilder(){
         return new BookBuilder();
+    }
+    
+    public static String generateBookId(Book book){
+//        return (book.getBookType().typeName+book.hashCode()).substring(0, 16);
+        return book.getBookType().typeName+(new Random().nextInt(2<<12));
     }
     
 }

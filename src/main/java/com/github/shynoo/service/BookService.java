@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service("bookService")
 public class BookService{
@@ -28,8 +27,5 @@ public class BookService{
         return bookDao.getBookById(id);
     }
     
-    public static String generateBookId(Book book){
-//        return (book.getBookType().typeName+book.hashCode()).substring(0, 16);
-        return ""+(new Random().nextInt(2<<16));
-    }
+    
 }

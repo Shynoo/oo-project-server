@@ -1,13 +1,11 @@
 package com.github.shynoo.entity.book;
 
-import com.github.shynoo.service.BookService;
-
 public class BookBuilder{
     
-    Book book = new Book();
+    Book book;
     
     BookBuilder(){
-        
+        book=new Book();
     }
     
     public BookBuilder name(String name){
@@ -32,7 +30,7 @@ public class BookBuilder{
     
     public Book build(){
         if (book.getBookId() == null) {
-            book.setBookId(BookService.generateBookId(book));
+            book.setBookId(Book.generateBookId(book));
         }
         if (book.getName() != null && book.getBookId() != null)
             return book;
