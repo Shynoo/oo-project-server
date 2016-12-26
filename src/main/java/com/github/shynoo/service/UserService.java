@@ -76,7 +76,7 @@ public class UserService{
     
     public ResultStatus deleteBook(User user, Book book){
         if (user.getUserType().isAllowAddBooks()) {
-            return bookDao.delBook(book);
+            return bookDao.deleteBook(book);
         }
         return ResultStatus.UNKNOWN_RESULT;
     }

@@ -107,7 +107,7 @@ public class LocalBookDao implements BookDao{
     }
     
     @Override
-    public ResultStatus delBook(Book book){
+    public ResultStatus deleteBook(Book book){
         books.remove(book.getBookId(), book);
         try{
             nameToBook.get(book.getName()).remove(book);

@@ -16,5 +16,5 @@ public interface BookDao{
     
     List<Book> searchBooksByType(BookType bookType);
     
-    ResultStatus delBook(Book book);
+    ResultStatus deleteBook(Book book);
 }
