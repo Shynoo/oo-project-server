@@ -20,4 +20,5 @@ public interface BookDao{
     
     Book getRandomBook();
     
+    void initData();
 }

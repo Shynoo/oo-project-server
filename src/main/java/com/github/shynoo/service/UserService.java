@@ -19,11 +19,14 @@ public class UserService{
     @Autowired
     private BookDao bookDao;
     
-    {
-        addBook((User) getUserById("1").get(),bookDao.getRandomBook());
-        addBook((User) getUserById("1").get(),bookDao.getRandomBook());
-        addBook((User) getUserById("11310057").get(),bookDao.getRandomBook());
-        addBook((User) getUserById("11310057").get(),bookDao.getRandomBook());
+    UserService(){
+        
+    }
+    
+    public void initData(){
+        userDao.initData();
+        bookDao.initData();
+        initBorrowData();
     }
     
     public Result userLogIn(String id, String password){
@@ -87,8 +90,14 @@ public class UserService{
         }
         return ResultStatus.UNKNOWN_RESULT;
     }
+     
+    boolean isInited=false;
     
     public ResultStatus borrowBook(User user, Book book){
+        if (!isInited){
+            initData();
+        }
+        
         
         if (!user.couldBorrowNewBook()) {
             return ResultStatus.FAILURE;
@@ -110,9 +119,22 @@ public class UserService{
         return ResultStatus.SUCCESS;
     }
     
+    public void initBorrowData(){
+        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
+        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
+        this.borrowBook((User) this.getUserById("1").get(),this.getRandomBook());
+        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
+        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
+        this.borrowBook((User) this.getUserById("11310057").get(),this.getRandomBook());
+        
+    }
+    
     public boolean checkUserCouldBorrowBook(User user){
         return user.couldBorrowNewBook();
     }
     
+    public Book getRandomBook(){
+        return bookDao.getRandomBook();
+    }
     
 }

@@ -10,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service("userDao")
 public class LocalUserDao implements UserDao{
     
-    
     private Map<String, User> users;
     
     private Map<String, String> idToPassword;
@@ -18,13 +17,13 @@ public class LocalUserDao implements UserDao{
     public LocalUserDao(){
         
         users = new ConcurrentHashMap();
-        
         idToPassword = new ConcurrentHashMap<>();
         
         initData();
     }
     
-    private void initData(){
+    @Override
+    public void initData(){
         
         User user = User.getFactory().createNormalUser().id("1")
             .name("张三").password("123").build();
@@ -42,7 +41,7 @@ public class LocalUserDao implements UserDao{
             .name("张宇").password("123").build();
         addUser(user);
         
-        user = User.getFactory().createAdvanceUser().id("admin01")
+        user = User.getFactory().createAdvanceUser().id("admin1")
             .name("管理员01").password("123").build();
         addUser(user);
         
