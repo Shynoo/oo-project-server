@@ -61,7 +61,7 @@ public class SampleController {
 
     @RequestMapping("user/{account}")
     HashMap<String, Object> getProfile(@PathVariable String account) {
-        User user = (User) userService.getUserById(account).object;
+        User user = userService.getUserById(account);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userName", user.getName());
         map.put("userType", user.userType.toString());
@@ -72,8 +72,7 @@ public class SampleController {
 
     @RequestMapping("user/{account}/books")
     List<Book> getBooks(@PathVariable String account) {
-        User user = (User) userService.getUserById(account).get();
-        List<Book> books = user.getBorrowingBooks();
+        List<Book> books = userService.getUserAllBorrowingBooks(account);
         System.out.println(books);
         System.out.println(books.size());
         for (Book book : books) {
@@ -108,7 +107,7 @@ public class SampleController {
     // * Others
     // **********
     public boolean checkAccount(String account, String password) {
-        return userService.userLogIn(account, password).status.equals(ResultStatus.SUCCESS);
+        return userService.checkPassword(account, password).status.equals(ResultStatus.SUCCESS);
     }
 
     private String fileRead(String fileName) throws IOException {

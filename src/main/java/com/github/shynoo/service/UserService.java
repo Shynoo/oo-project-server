@@ -1,84 +1,110 @@
 package com.github.shynoo.service;
 
 import com.github.shynoo.dao.BookDao;
+import com.github.shynoo.dao.BorrowingDao;
 import com.github.shynoo.dao.UserDao;
 import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookStatus;
 import com.github.shynoo.entity.result.Result;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
+import com.github.shynoo.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service("userService")
 public class UserService{
     
     @Autowired
     private UserDao userDao;
-    
     @Autowired
     private BookDao bookDao;
+    @Autowired
+    private BorrowingDao borrowingDao;
     
     UserService(){
         
     }
     
-    public void initData(){
-        userDao.initData();
-        bookDao.initData();
-        initBorrowData();
-    }
-    
-    public Result userLogIn(String id, String password){
-        if (!isInited){
-            initData();
-            isInited=true;
-        }
+    public Result checkPassword(String id, String password){
         String realPasswd = userDao.getUserPassword(id);
-        
         if (password.equals(realPasswd)) {
-            
             User user = userDao.getUserById(id);
-            
             return new Result(ResultStatus.SUCCESS, user);
         }
-        
         return new Result(ResultStatus.FAILURE);
         
     }
     
-    public Result getUserById(String id){
+    boolean isInited=false;
+    
+    private void initData(){
+        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
+    }
+    public User getUserById(String id){
         if (!isInited){
             isInited=true;
             initData();
         }
         User user = userDao.getUserById(id);
-        return new Result(ResultStatus.SUCCESS, user);
+//        return new Result(ResultStatus.SUCCESS, user);
+        return user;
     }
     
     
     public ResultStatus addUser(User user, User newUser){
-        
         if (user.getUserType().isAllowManageUsers()) {
-            ResultStatus rs = userDao.addUser(newUser);
-            return rs;
+            userDao.addUser(newUser);
+            return ResultStatus.SUCCESS;
         }
         return (ResultStatus.FAILURE);
-        
     }
     
     
     public ResultStatus deletUser(User user, User delUser){
         try{
             if (user.getUserType().isAllowManageUsers()) {
-                return (userDao.deleteUser(delUser));
+                userDao.deleteUser(delUser);
+                return ResultStatus.SUCCESS;
             }
         } catch(Exception e){
-            
             return (ResultStatus.UNKNOWN_RESULT);
-            
         }
         return (ResultStatus.FAILURE);
+    }
+    
+    public ResultStatus borrowBook(User user,Book book){
+//        if ((!checkUserCouldBorrowBook(user))&&(!checkBookCouldBorrowed(book))){
+//            return ResultStatus.FAILURE;
+//        }
+        borrowingDao.borrowOut(user.getId(),book.getBookId());
+        book.setBookStatus(BookStatus.BORROWING_OUT);
+        return ResultStatus.SUCCESS;
+    }
+    public ResultStatus borrowBook(String user,String book){
+        return borrowBook(userDao.getUserById(user),bookDao.getBookById(book));
+    }
+        
+        
+        public ResultStatus giveBackBook(Book book){
+        borrowingDao.getBookOwner(book.getBookId());
+        return ResultStatus.SUCCESS;
+    }
+    
+    public boolean checkBookCouldBorrowed(Book book){
+        if (book.getBookStatus().equals(BookStatus.BORROWING_OUT)){
+            return false;
+        }
+        return true;
     }
     
     
@@ -93,56 +119,48 @@ public class UserService{
     
     public ResultStatus deleteBook(User user, Book book){
         if (user.getUserType().isAllowAddBooks()) {
-            return bookDao.deleteBook(book);
+            bookDao.deleteBook(book);
+            return ResultStatus.SUCCESS;
         }
         return ResultStatus.UNKNOWN_RESULT;
     }
-     
-    boolean isInited=false;
     
-    public ResultStatus borrowBook(User user, Book book){
-        
-        if (!user.couldBorrowNewBook()) {
-            return ResultStatus.FAILURE;
-        }
-        if (!book.getBookStatus().equals(BookStatus.IN_LIBIRARY)) {
-            return ResultStatus.FAILURE;
-        }
-        
-        if (!user.borrowBook(book)){
-            return ResultStatus.FAILURE;
-        }
-        book.borrowOut(user);
-        
-        return ResultStatus.SUCCESS;
-    }
-    
-    
-    public ResultStatus giveBack(Book book){
-        /*
-        ** TODO
-         */
-        book.giveBack();
-        book.getUser().giveBackBook(book);
-        return ResultStatus.SUCCESS;
-    }
-    
-    public void initBorrowData(){
-        borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("11310057").get(),getRandomBook());
-        borrowBook((User) getUserById("11310057").get(),getRandomBook());
-        borrowBook((User) getUserById("11310057").get(),getRandomBook());
-        
-    }
     
     public boolean checkUserCouldBorrowBook(User user){
-        return user.couldBorrowNewBook();
+        List<String> ls=borrowingDao.getUserAllBorrowedBooks(user.getId());
+        if (ls!=null||ls.size()>=user.getUserType().maxBorrowingBookNumber){
+            return false;
+        }
+        Date now=new Date();
+        for (String bookId:ls){
+            if (DateUtil.defferentNumber(borrowingDao.bookOutDay(bookId),now)>=user.getUserType().maxBorrowingDay){
+                return false;
+            }
+        }
+        return true;
     }
     
-    public Book getRandomBook(){
-        return bookDao.getRandomBook();
+    public List<Book> getUserAllBorrowingBooks(User user){
+        return getUserAllBorrowingBooks(user.getId());
+    }
+    
+    public List<Book> getUserAllBorrowingBooks(String id){
+        if (!isInited){
+            isInited=true;
+            initData();
+        }
+        List<String> ls=borrowingDao.getUserAllBorrowedBooks(id);
+        if (ls==null){
+            return null;
+        }
+        List nls=new LinkedList();
+        for (String bookId:ls){
+            nls.add(bookDao.getBookById(bookId));
+        }
+        return nls;
+    }
+        public Book getRandomBook(){
+        return bookDao.getRandomUnBorrowedBook();
     }
     
 }

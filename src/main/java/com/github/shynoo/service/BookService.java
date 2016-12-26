@@ -19,7 +19,6 @@ public class BookService{
         return bookDao.searchBooksByName(name);
     }
     
-    
     public List<Book> searchBookByType(BookType type){
         return bookDao.searchBooksByType(type);
     }
@@ -29,7 +28,7 @@ public class BookService{
     }
     
     public Book getRandomBook(){
-        return bookDao.getRandomBook();
+        return bookDao.getRandomUnBorrowedBook();
     }
     
 }

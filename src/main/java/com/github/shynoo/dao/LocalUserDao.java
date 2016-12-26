@@ -1,6 +1,5 @@
 package com.github.shynoo.dao;
 
-import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +44,6 @@ public class LocalUserDao implements UserDao{
             .name("管理员01").password("123").build();
         addUser(user);
         
-        
     }
     
     
@@ -61,18 +59,18 @@ public class LocalUserDao implements UserDao{
     
     
     @Override
-    public ResultStatus addUser(User user){
+    public int addUser(User user){
         idToPassword.put(user.getId(), user.getPassword());
         users.put(user.getId(), user);
         user.setPassword("");
-        return ResultStatus.SUCCESS;
+        return 0;
     }
     
     @Override
-    public ResultStatus deleteUser(User user){
+    public int deleteUser(User user){
         users.remove(user.getId());
         idToPassword.remove(user.getId());
-        return ResultStatus.SUCCESS;
+        return 0;
     }
     
     

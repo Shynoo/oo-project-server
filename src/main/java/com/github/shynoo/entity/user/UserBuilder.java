@@ -1,10 +1,6 @@
 package com.github.shynoo.entity.user;
 
 
-import com.github.shynoo.entity.book.Book;
-
-import java.util.List;
-
 public class UserBuilder{
     
     User user;
@@ -34,10 +30,6 @@ public class UserBuilder{
         return this;
     }
     
-    public UserBuilder borrowindBooks(List<Book> books){
-        user.setBorrowingBooks(books);
-        return this;
-    }
     
     public User build(){
         return this.user;

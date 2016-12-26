@@ -2,13 +2,12 @@ package com.github.shynoo.dao;
 
 import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookType;
-import com.github.shynoo.entity.result.ResultStatus;
 
 import java.util.List;
 
 public interface BookDao{
     
-    ResultStatus addBook(Book book);
+    int addBook(Book book);
     
     Book getBookById(String id);
     
@@ -16,9 +15,9 @@ public interface BookDao{
     
     List<Book> searchBooksByType(BookType bookType);
     
-    ResultStatus deleteBook(Book book);
+    int deleteBook(Book book);
     
-    Book getRandomBook();
+    Book getRandomUnBorrowedBook();
     
     void initData();
 }
