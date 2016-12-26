@@ -19,6 +19,13 @@ public class UserService{
     @Autowired
     private BookDao bookDao;
     
+    {
+        addBook((User) getUserById("1").get(),bookDao.getRandomBook());
+        addBook((User) getUserById("1").get(),bookDao.getRandomBook());
+        addBook((User) getUserById("11310057").get(),bookDao.getRandomBook());
+        addBook((User) getUserById("11310057").get(),bookDao.getRandomBook());
+    }
+    
     public Result userLogIn(String id, String password){
         
         String realPasswd = userDao.getUserPassword(id);

@@ -17,4 +17,7 @@ public interface BookDao{
     List<Book> searchBooksByType(BookType bookType);
     
     ResultStatus deleteBook(Book book);
+    
+    Book getRandomBook();
+    
 }

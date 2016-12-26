@@ -79,6 +79,8 @@ public class LocalBookDao implements BookDao{
         return books.get(id);
     }
     
+    
+    
     @Override
     public List<Book> searchBooksByName(String name){
         List list = new LinkedList();
@@ -115,6 +117,16 @@ public class LocalBookDao implements BookDao{
         } catch(NullPointerException e){
             return ResultStatus.SUCCESS;
         }
+    }
+    
+    @Override
+    public Book getRandomBook(){
+        for (Book b:books.values()){
+            if (b.getBookStatus().equals(BookStatus.IN_LIBIRARY)){
+                return b;
+            }
+        }
+        return null;
     }
     
     

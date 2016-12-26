@@ -19,7 +19,7 @@ public class UserServiceTest{
     @Test
     public void userLogInTest(){
         String id = "1";
-        String password = "11310057";
+        String password = "123";
         Result r = userService.userLogIn(id, password);
         User u = (User) r.get();
         Assert.assertEquals(u, (User) userService.getUserById(id).get());

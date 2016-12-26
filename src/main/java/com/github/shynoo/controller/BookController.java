@@ -20,7 +20,6 @@ public class BookController{
     @Autowired
     private BookService bookService;
     
-    
     @RequestMapping(value = "/search")
     public Result searchBookByName(@RequestParam String q){
         try{

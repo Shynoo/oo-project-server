@@ -23,7 +23,6 @@ public enum UserType{
         NORMAL.maxBorrowingBookNumber = 10;
         NORMAL.maxBorrowingDay = 15;
         
-        
         ADVANCE.maxBorrowingBookNumber = 20;
         ADVANCE.maxBorrowingDay = 30;
         
