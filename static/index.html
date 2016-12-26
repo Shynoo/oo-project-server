@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="stylesheet" href="mdl/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="mdl/material.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="js.cookie.js"></script>
+    <link rel="stylesheet" href="common.css">
+    <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div class="nav" style="margin-bottom: 120px;">
+        <button id="btn-login" class="btn blue float-right">Sign in</button>
+        <a id="profile" class="float-right" style="line-height: 30.78px; margin-right: 1rem; display: none;" href="#">Profile</a>
+        <span id="lb-welcome" class="float-right" style="line-height: 30.78px; display: none;">Welcome,&nbsp;</span>
+    </div>
+    <div class="container">
+        <center>
+            <p id="logo" style="font-size: 80px; font-family: 'Product Sans'; line-height: 80px; transition: all 0.5s ease-in-out;">Library</p>
+            <input id="searchbox" class="input" type="text">
+            <div>
+                <button id="btn-search" class="btn">Search</button>
+                <button id="btn-lucky" class="btn">I'm Feeling Lucky</button>
+            </div>
+        </center>
+        <div id="results" style="display: none;">
+            <hr id="hr">
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(window).focus(detectCookies);
+
+            detectCookies();
+
+            // Events
+            $('#btn-login').click(function () {
+                if ($.hasCookie) {
+                    Cookies.remove('lib-account');
+                    window.location.reload();
+                } else {
+                    window.location.href = 'login';
+                }
+            });
+            $('#searchbox').keypress(function (e) {
+                if (e.which == 13) {
+                    doSearch();
+                }
+            });
+            $('#btn-search').click(doSearch);
+            $('#btn-lucky').click(feelLucky);
+        });
+
+        function detectCookies() {
+            // Cookies
+            let account = Cookies.get('lib-account');
+            let btnLogin = $('#btn-login');
+            let profile = $('#profile');
+            let lb_welcome = $('#lb-welcome');
+            $.hasCookie = account != undefined;
+            $.account = account;
+            // Update account info
+            if ($.hasCookie) {
+                btnLogin.text('Sign out');
+                profile.text(account);
+                profile.attr('href', 'user');
+                profile.css('display', 'inherit');
+                lb_welcome.css('display', 'inherit');
+            } else {
+                btnLogin.text('Sign in');
+                profile.css('display', 'none');
+                lb_welcome.css('display', 'none');
+            }
+        }
+
+        function doSearch() {
+            let data = {};
+            data['q'] = $('#searchbox').val();
+
+            $.ajax({
+                method: 'GET',
+                url: 'search',
+                data: data,
+                timeout: 100000,
+                success: showResult,
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function feelLucky() {
+            $.ajax({
+                method: 'GET',
+                url: 'lucky',
+                timeout: 100000,
+                success: showResult(data),
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function showResult(data) {
+            console.log(data);
+            animate();
+            for (book of data) {
+                $('#results').append('<div class="book-result"><p class="book-name">' + book['bookName'] + '</p><p>Book ID: ' + book['bookID'] + '</p><p>Type: ' + book['type'] + '</p><p>Status: ' + book['status'] + '</p><p><button class="lb-btn" onclick="borrow(\'' + book['bookID'] + '\')">Check out</button></p></div>');
+            }
+            setTimeout("$('#results').fadeIn(500)", 500);
+        }
+
+        function animate() {
+            $('.nav').css('margin-bottom', 0);
+            $('#logo').css({
+                'font-size': '60px',
+                'line-height': '60px',
+                'margin-bottom': '8px'
+            });
+            $('#btn-search').fadeOut(500);
+            $('#btn-lucky').fadeOut(500);
+        }
+
+        function borrow(bookID) {
+            if ($.hasCookie) {
+                let data = {};
+                data['account'] = $.account;
+                data['bookID'] = bookID;
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'borrow',
+                    data: data,
+                    timeout: 100000,
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (e) {
+                        console.log('ERROR: ', e);
+                    }
+                });
+            } else {
+                window.open('login');
+            }
+        }
+
+    </script>
+</body>
+
+</html>
