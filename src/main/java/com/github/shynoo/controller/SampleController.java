@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.result.ResultStatus;
+import com.github.shynoo.entity.user.User;
 import com.github.shynoo.service.BookService;
 import com.github.shynoo.service.UserService;
 
@@ -26,7 +29,6 @@ public class SampleController {
     private BookService bookService;
 
     @RequestMapping("/login")
-    // @ResponseBody
     String loginPage() {
         try {
             return htmlCompress(fileRead("static/login.html"));
@@ -37,7 +39,6 @@ public class SampleController {
     }
 
     @RequestMapping("/doLogin")
-    // @ResponseBody
     HashMap<String, Object> doLogin(@RequestParam String account, @RequestParam String password) {
         HashMap<String, Object> map = new HashMap<String, Object>();
         if (checkAccount(account, password)) {
@@ -50,7 +51,6 @@ public class SampleController {
     }
 
     @RequestMapping("user")
-    // @ResponseBody
     String userPage() {
         try {
             return htmlCompress(fileRead("static/user.html"));
@@ -61,16 +61,23 @@ public class SampleController {
     }
 
     @RequestMapping("user/{account}")
-    // @ResponseBody
     HashMap<String, Object> getProfile(@PathVariable String account) {
+        User user = (User) userService.getUserById(account).object;
         HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("userType", "admin");
-        // map.put("status", "normal");
+        map.put("userName", user.getName());
+        map.put("userType", user.userType.toString());
+        map.put("maxBooks", user.userType.maxBorrowingBookNumber);
+        map.put("maxDays", user.userType.maxBorrowingDay);
         return map;
     }
 
+    @RequestMapping("user/{account}/books")
+    List<Book> getBooks(@PathVariable String account) {
+        User user = (User) userService.getUserById(account).object;
+        return user.getBorrowingBooks();
+    }
+
     @RequestMapping("search")
-    // @ResponseBody
     ArrayList<HashMap<String, String>> search(@RequestParam String q) {
         ArrayList<HashMap<String, String>> results = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> map = new HashMap<String, String>();
@@ -83,13 +90,11 @@ public class SampleController {
     }
 
     @RequestMapping("feelLucky")
-    // @ResponseBody
     String feelLucky() {
         return "lucky";
     }
 
     @RequestMapping("borrow")
-    // @ResponseBody
     String borrow(@RequestParam String account, @RequestParam String bookID) {
         return "success";
     }

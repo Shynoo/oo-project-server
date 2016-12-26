@@ -2,27 +2,29 @@ package com.github.shynoo.entity.user;
 
 public enum UserType{
     
-    GUEST(), NORMAL(), ADVANCE(), ADMIN();
+    NORMAL("Normal"), ADVANCE("Advanced"), ADMIN("Admin");
     
-    int maxBorrowingBookNumber;
+    public int maxBorrowingBookNumber;
     
-    int maxBorrowingDay;
+    public int maxBorrowingDay;
     
     boolean isAllowAddBooks = false;
     
     boolean isAllowManageUsers = false;
+
+    String type;
     
     UserType(){
         
     }
     
+    UserType(String type) {
+        this.type = type;
+    }
+
     static{
-        GUEST.maxBorrowingBookNumber = 0;
-        GUEST.maxBorrowingDay = 0;
-        
         NORMAL.maxBorrowingBookNumber = 10;
         NORMAL.maxBorrowingDay = 15;
-        
         
         ADVANCE.maxBorrowingBookNumber = 20;
         ADVANCE.maxBorrowingDay = 30;
@@ -40,6 +42,11 @@ public enum UserType{
     
     public boolean isAllowManageUsers(){
         return isAllowManageUsers;
+    }
+
+    @Override
+    public String toString() {
+        return this.type;
     }
     
 }
