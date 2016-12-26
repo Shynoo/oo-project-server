@@ -18,15 +18,15 @@ public class Book{
     
     private BookStatus bookStatus = BookStatus.IN_LIBIRARY;
     
-//    private User user;
+    private User user;
     
     private Date borrowedDate;
     
-//    public User getReader(){
-//        if (this.bookStatus == BookStatus.BORROWING_OUT)
-//            return this.user;
-//        return null;
-//    }
+    public User getReader(){
+        if (this.bookStatus == BookStatus.BORROWING_OUT)
+            return this.user;
+        return null;
+    }
     
     public void borrowOut(User user){
         borrowedDate = new Date();

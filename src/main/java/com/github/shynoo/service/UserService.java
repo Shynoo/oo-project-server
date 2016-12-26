@@ -123,7 +123,7 @@ public class UserService{
         ** TODO
          */
         book.giveBack();
-        //user.giveBackBook(book);
+        book.getUser().giveBackBook(book);
         return ResultStatus.SUCCESS;
     }
     
@@ -131,9 +131,10 @@ public class UserService{
         borrowBook((User) getUserById("1").get(),getRandomBook());
         borrowBook((User) getUserById("1").get(),getRandomBook());
         borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("1").get(),getRandomBook());
-        borrowBook((User) getUserById("1").get(),getRandomBook());
+        borrowBook((User) getUserById("11310057").get(),getRandomBook());
+        borrowBook((User) getUserById("11310057").get(),getRandomBook());
+        borrowBook((User) getUserById("11310057").get(),getRandomBook());
+        
     }
     
     public boolean checkUserCouldBorrowBook(User user){
