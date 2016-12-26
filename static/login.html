@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in - Library</title>
+    <link rel="stylesheet" href="mdl/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="mdl/material.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="js.cookie.js"></script>
+    <link rel="stylesheet" href="common.css">
+    <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div class="container">
+        <div style="margin-bottom: 36px;">&nbsp;</div>
+        <center>
+            <p style="font-size: 36px; font-family: 'Product Sans'; margin: 0 auto 36px; line-height: 38px;">Library</p>
+            <p style="color: #555; font-size: 38px; font-weight: lighter; margin-bottom: 26px; line-height: 40px;">One account. All of Library.</p>
+            <p style="color: #555; font-size: 18px; font-weight: lighter; margin-bottom: 26px; line-height: 20px;">Sign in with your Library Account</p>
+            <div id="signin-card" class="shadow-2px">
+                <form id="form-login">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input id="input-account" class="mdl-textfield__input" style="font-family: 'microsoft yahei'" type="text">
+                        <label class="mdl-textfield__label">Account</label>
+                    </div><br>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input id="input-password" class="mdl-textfield__input" style="font-family: 'microsoft yahei'" type="password">
+                        <label class="mdl-textfield__label">Password</label>
+                    </div><br>
+                    <input class="btn blue" value="Sign in" type="submit">
+                </form>
+            </div>
+        </center>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#form-login').submit(function (event) {
+                event.preventDefault();
+                login();
+            });
+        });
+
+        function login() {
+            let data = {};
+            data['account'] = $('#input-account').val();
+            data['password'] = $('#input-password').val();
+
+            $.ajax({
+                method: 'GET',
+                url: 'doLogin',
+                data: data,
+                timeout: 100000,
+                success: function (data) {
+                    console.log(data);
+                    if (data["result"]) {
+                        Cookies.set('lib-account', data['account']); /* ,{path: '/'} */
+                        if (window.history.length <= 1) {
+                            window.close();
+                        } else {
+                            window.location.href = document.referrer;
+                        }
+                    } else {
+                        alert('error');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

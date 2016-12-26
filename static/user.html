@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User - Library</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="mdl/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="mdl/material.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="js.cookie.js"></script>
+    <link rel="stylesheet" href="common.css">
+    <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
+    <style>
+        input.form-control {
+            border-radius: 0;
+            padding: 5px 8px 6px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a style="line-height: 30.78px;" href="/">Home</a>
+        <button id="btn-login" class="btn blue float-right">Sign in</button>
+        <span id="profile" class="float-right" style="line-height: 30.78px; margin-right: 1rem; display: none;" href="#">Profile</span>
+        <span id="lb-welcome" class="float-right" style="line-height: 30.78px; display: none;">Welcome,&nbsp;</span>
+    </div>
+    <div class="container">
+        <center>
+            <p style="color: #555; font-size: 30px; margin-bottom: 26px; line-height: 32px;">Manage your account, all in one place</p>
+        </center>
+        <div class="panel panel-default">
+            <div class="panel-heading">Account Information</div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <td>User Name</td>
+                        <td id="user-name">Loading ...</td>
+                    </tr>
+                    <tr>
+                        <td>User Type</td>
+                        <td id="user-type">Loading ...</td>
+                    </tr>
+                    <tr>
+                        <td>Max number of books</td>
+                        <td id="max-books">Loading ...</td>
+                    </tr>
+                    <tr>
+                        <td>Max number of days</td>
+                        <td id="max-days">Loading ...</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Books</div>
+            <div class="panel-body">
+                <table id="borrowed-books" class="table table-striped">
+                    <tr>
+                        <th>Book ID</th>
+                        <th>Book Name</th>
+                        <th>Date Checked Out</th>
+                        <th>Date Expected to Return</th>
+                        <th>Operation</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">User Management</div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                        <th>Level</th>
+                        <th>Operations</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Add Book</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Book Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Type">
+                </div>
+                <button class="btn blue" onclick="">Add</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(window).focus(detectCookies);
+
+            detectCookies();
+
+            if ($.hasCookie) {
+                getProfile();
+                getBooks();
+            }
+
+            // Events
+            $('#btn-login').click(function () {
+                if ($.hasCookie) {
+                    Cookies.remove('lib-account');
+                    window.location.reload();
+                } else {
+                    window.location.href = 'login';
+                }
+            });
+        });
+
+        function detectCookies() {
+            // Cookies
+            let account = Cookies.get('lib-account');
+            let btnLogin = $('#btn-login');
+            let profile = $('#profile');
+            let lb_welcome = $('#lb-welcome');
+            $.hasCookie = account != undefined;
+            $.account = account;
+            // Update account info
+            if ($.hasCookie) {
+                btnLogin.text('Sign out');
+                profile.text(account);
+                profile.attr('href', 'user');
+                profile.css('display', 'inherit');
+                lb_welcome.css('display', 'inherit');
+            } else {
+                btnLogin.text('Sign in');
+                profile.css('display', 'none');
+                lb_welcome.css('display', 'none');
+                window.location.href = 'login';
+            }
+        }
+
+        function getProfile() {
+            $.ajax({
+                method: 'GET',
+                url: 'user/' + $.account,
+                timeout: 100000,
+                success: function (data) {
+                    console.log('user profile: ' + data);
+                    $('#user-name').text(data['userName']);
+                    $('#user-type').text(data['userType']);
+                    $('#max-books').text(data['maxBooks']);
+                    $('#max-days').text(data['maxDays']);
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function getBooks() {
+            $.ajax({
+                method: 'GET',
+                url: 'user/' + $.account + '/books',
+                timeout: 100000,
+                success: function (books) {
+                    console.log('borrowed books: ' + books);
+                    let tb_borrowedBooks = $('#borrowed-books');
+                    for (book in books) {
+                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td></tr>');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
