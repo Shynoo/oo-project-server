@@ -20,21 +20,18 @@ public class SystemController{
     @Autowired
     private BookService bookService;
     
-    @RequestMapping(value="/user/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Result logIn(@RequestParam String id, @RequestParam String password
 //        ,HttpServletResponse response
     ){
         
-        return userService.userLogIn(id,password);
+        return userService.userLogIn(id, password);
     }
     
-    @RequestMapping(value="/test")
+    @RequestMapping(value = "/test")
     public String test(){
         return "test ok";
     }
-    
-    
-    
     
     
 }

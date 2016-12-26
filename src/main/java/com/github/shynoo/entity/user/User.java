@@ -20,7 +20,7 @@ public class User{
     
     private List<Book> borrowingBooks;
     
-    private final static UserFactory factory=new UserFactory();
+    private final static UserFactory factory = new UserFactory();
     
     public static UserBuilder newBuilder(){
         return new UserBuilder();
@@ -31,11 +31,11 @@ public class User{
     }
     
     public boolean couldBorrowNewBook(){
-        if (borrowingBooks.size()>=userType.maxBorrowingBookNumber){
+        if (borrowingBooks.size() >= userType.maxBorrowingBookNumber) {
             return false;
         }
-        for (Book book:borrowingBooks){
-            if (DateUtil.defferentNumber(book.getBorrowedDate(),new Date())>=userType.maxBorrowingDay){
+        for (Book book : borrowingBooks){
+            if (DateUtil.defferentNumber(book.getBorrowedDate(), new Date()) >= userType.maxBorrowingDay) {
                 return false;
             }
         }
@@ -43,14 +43,14 @@ public class User{
     }
     
     public boolean couldManageUser(){
-        if (userType.isAllowManageUsers()){
+        if (userType.isAllowManageUsers()) {
             return true;
         }
         return false;
     }
     
     public boolean borrowBook(Book book){
-        if (!couldBorrowNewBook()){
+        if (!couldBorrowNewBook()) {
             return false;
         }
         borrowingBooks.add(book);

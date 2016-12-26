@@ -2,7 +2,6 @@ package com.github.shynoo.controller;
 
 
 import com.github.shynoo.entity.book.Book;
-import com.github.shynoo.entity.book.BookType;
 import com.github.shynoo.entity.result.Result;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.service.BookService;
@@ -22,49 +21,49 @@ public class BookController{
     private BookService bookService;
     
     
-    @RequestMapping(value="/search")
+    @RequestMapping(value = "/search")
     public Result searchBookByName(@RequestParam String q){
         try{
-            List<Book> ls=bookService.searchBookByName(q);
-            return new Result(ResultStatus.SUCCESS,ls);
+            List<Book> ls = bookService.searchBookByName(q);
+            return new Result(ResultStatus.SUCCESS, ls);
         } catch(Exception e){
             log.error(e.getMessage());
         }
         return new Result(ResultStatus.FAILURE);
     }
     
-    
-    @RequestMapping(value="/search")
-    public Result searchBookByName(@RequestParam(name="type") int typeId){
+    /*
+    @RequestMapping(value = "/search")
+    public Result searchBookByName(@RequestParam(name = "type") int typeId){
         try{
-            BookType type=BookType.of(typeId);
+            BookType type = BookType.of(typeId);
             
-            if (type==null){
-                return new Result(ResultStatus.FAILURE,"Unknown type id!","");
+            if (type == null) {
+                return new Result(ResultStatus.FAILURE, "Unknown type id!", "");
             }
             
-            List<Book> ls=bookService.searchBookByType(type);
+            List<Book> ls = bookService.searchBookByType(type);
             
-            return new Result(ResultStatus.SUCCESS,ls);
+            return new Result(ResultStatus.SUCCESS, ls);
             
         } catch(Exception e){
             log.error(e.getMessage());
         }
         return new Result(ResultStatus.FAILURE);
     }
+    */
     
     
-    @RequestMapping(value ="/book/{id}")
+    @RequestMapping(value = "/book/{id}")
     public Result getBookById(String id){
         
-        Book book=bookService.getBookById(id);
-        if (book==null){
-            return new Result(ResultStatus.FAILURE,"Unknown Book Id","");
+        Book book = bookService.getBookById(id);
+        if (book == null) {
+            return new Result(ResultStatus.FAILURE, "Unknown Book Id", "");
         }
         
-        return new Result(ResultStatus.SUCCESS,book);
+        return new Result(ResultStatus.SUCCESS, book);
     }
-    
     
     
 }

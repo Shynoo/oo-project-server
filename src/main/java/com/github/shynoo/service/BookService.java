@@ -4,17 +4,16 @@ import com.github.shynoo.dao.BookDao;
 import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service("bookService")
-@Repository
 public class BookService{
     
     @Autowired
-    BookDao bookDao;
+    private BookDao bookDao;
     
     public List<Book> searchBookByName(String name){
         return bookDao.searchBooksByName(name);
@@ -30,6 +29,7 @@ public class BookService{
     }
     
     public static String generateBookId(Book book){
-        return (book.getBookType().typeName+book.hashCode()).substring(0,16);
+//        return (book.getBookType().typeName+book.hashCode()).substring(0, 16);
+        return ""+(new Random().nextInt(2<<16));
     }
 }

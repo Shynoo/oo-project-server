@@ -15,27 +15,27 @@ public class Book{
     
     private BookType bookType;
     
-    private BookStatus bookStatus=BookStatus.IN_LIBIRARY;
+    private BookStatus bookStatus = BookStatus.IN_LIBIRARY;
     
     private User user;
     
     private Date borrowedDate;
     
     public User getReader(){
-        if (this.bookStatus==BookStatus.BORROWING_OUT)
+        if (this.bookStatus == BookStatus.BORROWING_OUT)
             return this.user;
         
         return null;
     }
     
     public void borrowOut(User user){
-        borrowedDate=new Date();
-        this.bookStatus=BookStatus.BORROWING_OUT;
-        this.user=user;
+        borrowedDate = new Date();
+        this.bookStatus = BookStatus.BORROWING_OUT;
+        this.user = user;
     }
     
     public void giveBack(){
-        this.bookStatus=BookStatus.IN_LIBIRARY;
+        this.bookStatus = BookStatus.IN_LIBIRARY;
         
     }
     

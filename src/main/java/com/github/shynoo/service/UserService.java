@@ -21,24 +21,29 @@ public class UserService{
     
     public Result userLogIn(String id, String password){
         
-        String realPasswd=userDao.getUserPassword(id);
+        String realPasswd = userDao.getUserPassword(id);
         
-        if (password.equals(realPasswd)){
+        if (password.equals(realPasswd)) {
             
-            User user=userDao.getUserById(id);
+            User user = userDao.getUserById(id);
             
-            return new Result(ResultStatus.SUCCESS,user);
+            return new Result(ResultStatus.SUCCESS, user);
         }
         
         return new Result(ResultStatus.FAILURE);
         
     }
     
+    public Result getUserById(String id){
+        User user = userDao.getUserById(id);
+        return new Result(ResultStatus.SUCCESS, user);
+    }
     
-    public Result addUser(User user,User newUser){
+    
+    public Result addUser(User user, User newUser){
         
-        if (user.getUserType().isAllowManageUsers()){
-            ResultStatus rs=userDao.addUser(newUser);
+        if (user.getUserType().isAllowManageUsers()) {
+            ResultStatus rs = userDao.addUser(newUser);
             return new Result(rs);
         }
         return new Result(ResultStatus.FAILURE);
@@ -46,12 +51,12 @@ public class UserService{
     }
     
     
-    public Result deletUser(User user,User delUser){
+    public Result deletUser(User user, User delUser){
         try{
-            if (user.getUserType().isAllowManageUsers()){
+            if (user.getUserType().isAllowManageUsers()) {
                 return new Result(userDao.deleteUser(delUser));
             }
-        } catch (Exception e){
+        } catch(Exception e){
             
             return new Result(ResultStatus.UNKNOWN_RESULT);
             
@@ -61,7 +66,7 @@ public class UserService{
     
     
     public ResultStatus addBook(User user, Book book){
-        if (user.getUserType().isAllowAddBooks()){
+        if (user.getUserType().isAllowAddBooks()) {
             bookDao.addBook(book);
             return ResultStatus.SUCCESS;
         }
@@ -69,19 +74,19 @@ public class UserService{
     }
     
     
-    public ResultStatus deleteBook(User user,Book book){
-        if (user.getUserType().isAllowAddBooks()){
+    public ResultStatus deleteBook(User user, Book book){
+        if (user.getUserType().isAllowAddBooks()) {
             return bookDao.delBook(book);
         }
         return ResultStatus.UNKNOWN_RESULT;
     }
     
-    public ResultStatus borrowBook(User user,Book book){
+    public ResultStatus borrowBook(User user, Book book){
         
-        if (!user.couldBorrowNewBook()){
+        if (!user.couldBorrowNewBook()) {
             return ResultStatus.FAILURE;
         }
-        if (!book.getBookStatus().equals(BookStatus.IN_LIBIRARY)){
+        if (!book.getBookStatus().equals(BookStatus.IN_LIBIRARY)) {
             return ResultStatus.FAILURE;
         }
         

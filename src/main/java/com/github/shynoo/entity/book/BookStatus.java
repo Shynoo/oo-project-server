@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum BookStatus{
     
-    IN_LIBIRARY(),BORROWING_OUT();
+    IN_LIBIRARY(), BORROWING_OUT();
     
     @Getter
     private String place;
@@ -14,7 +14,7 @@ public enum BookStatus{
     }
     
     public void setPlace(String place){
-        this.place=place;
+        this.place = place;
     }
     
     

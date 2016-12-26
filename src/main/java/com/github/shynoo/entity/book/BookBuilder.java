@@ -4,7 +4,7 @@ import com.github.shynoo.service.BookService;
 
 public class BookBuilder{
     
-    Book book=new Book();
+    Book book = new Book();
     
     BookBuilder(){
         
@@ -31,10 +31,10 @@ public class BookBuilder{
     }
     
     public Book build(){
-        if (book.getBookId()==null){
+        if (book.getBookId() == null) {
             book.setBookId(BookService.generateBookId(book));
         }
-        if (book.getName()!=null&&book.getBookId()!=null)
+        if (book.getName() != null && book.getBookId() != null)
             return book;
         else throw new RuntimeException("Illegal Book Name or Book Id!");
     }

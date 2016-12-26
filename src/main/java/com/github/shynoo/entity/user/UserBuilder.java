@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserBuilder{
     
-    User user=new User();
+    User user = new User();
     
     UserBuilder(){
         

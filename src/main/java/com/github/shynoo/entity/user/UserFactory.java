@@ -9,7 +9,7 @@ public class UserFactory{
     public UserBuilder createAdvanceUser(){
         return new UserBuilder().type(UserType.ADVANCE);
     }
-    
+
 //    UserBuilder createAdministor(){
 //        return new UserBuilder().type(UserType.ADMIN);
 //    }
