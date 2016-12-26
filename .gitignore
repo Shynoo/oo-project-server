@@ -26,3 +26,5 @@ nbdist/
 mvnw
 mvnw.cmd
 
+### VS Code ###
+.vscode/

@@ -73,7 +73,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">User Management</div>
             <div class="panel-body">
-                <table class="table table-striped">
+                <table id="users" class="table table-striped">
                     <tr>
                         <th>User ID</th>
                         <th>User Name</th>
@@ -168,7 +168,25 @@
                     console.log('borrowed books: ' + books);
                     let tb_borrowedBooks = $('#borrowed-books');
                     for (book in books) {
-                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td></tr>');
+                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['borrowedDate'] + '</td><td><button class="lb-btn">Return</button></td></tr>');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function getUsers() {
+            $.ajax({
+                method: 'GET',
+                url: 'users',
+                timeout: 100000,
+                success: function (users) {
+                    console.log('users: ' + users);
+                    let tb_users = $('#users');
+                    for (user in users) {
+                        tb_borrowedBooks.append('<tr><td>' + book['id'] + '</td><td>' + book['name'] + '</td><td>' + book['userType'] + '</td><td><button class="lb-btn">Upgrade</button></td></tr>');
                     }
                 },
                 error: function (e) {
