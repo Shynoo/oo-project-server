@@ -23,7 +23,7 @@ public class Book{
         this.bookStatus = BookStatus.IN_LIBIRARY;
     }
     
-    public static BookBuilder newBuilder(){
+    public static BookBuilder newBook(){
         return new BookBuilder();
     }
     
