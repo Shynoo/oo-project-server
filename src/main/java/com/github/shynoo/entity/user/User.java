@@ -15,7 +15,7 @@ public class User{
     
     private final static UserFactory factory = new UserFactory();
     
-    public static UserBuilder newBuilder(){
+    public static UserBuilder newUser(){
         return new UserBuilder();
     }
     

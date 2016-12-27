@@ -159,7 +159,8 @@ public class UserService{
         }
         return nls;
     }
-        public Book getRandomBook(){
+    
+    public Book getRandomUnBorrowedBook(){
         return bookDao.getRandomUnBorrowedBook();
     }
     
