@@ -21,7 +21,7 @@
     </div>
     <div class="container">
         <center>
-            <p id="logo" style="font-size: 80px; font-family: 'Product Sans'; line-height: 80px; transition: all 0.5s ease-in-out;">Library</p>
+            <p id="logo" style="font-size: 80px; font-family: 'Product Sans'; line-height: 80px; transition: all 0.5s ease-in-out; cursor: pointer; margin-left: 240px; margin-right: 240px;" onclick="window.location.reload();">Library</p>
             <input id="searchbox" class="input" type="text">
             <div>
                 <button id="btn-search" class="btn">Search</button>
@@ -79,27 +79,31 @@
         }
 
         function doSearch() {
-            let data = {};
-            data['q'] = $('#searchbox').val();
+            $('#results').fadeOut(300);
 
-            $.ajax({
-                method: 'GET',
-                url: 'search',
-                data: data,
-                timeout: 100000,
-                success: showResult,
-                error: function (e) {
-                    console.log('ERROR: ', e);
-                }
-            });
+            setTimeout(function () {
+                let data = {};
+                data['q'] = $('#searchbox').val();
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'search',
+                    data: data,
+                    timeout: 100000,
+                    success: showResult,
+                    error: function (e) {
+                        console.log('ERROR: ', e);
+                    }
+                });
+            }, 300);
         }
 
         function feelLucky() {
             $.ajax({
                 method: 'GET',
-                url: 'lucky',
+                url: 'feelLucky',
                 timeout: 100000,
-                success: showResult(data),
+                success: showResult,
                 error: function (e) {
                     console.log('ERROR: ', e);
                 }
@@ -109,10 +113,14 @@
         function showResult(data) {
             console.log(data);
             animate();
+            $('#results div').remove('.book-result');
             for (book of data) {
-                $('#results').append('<div class="book-result"><p class="book-name">' + book['bookName'] + '</p><p>Book ID: ' + book['bookID'] + '</p><p>Type: ' + book['type'] + '</p><p>Status: ' + book['status'] + '</p><p><button class="lb-btn" onclick="borrow(\'' + book['bookID'] + '\')">Check out</button></p></div>');
+                $('#results').append('<div class="book-result"><p class="book-name">' + book['name'] + '</p><p>Book ID: ' + book['bookId'] + '</p><p>Type: ' + book['bookType'] + '</p><p>Status: ' + parseStatus(book['bookStatus']) + '</p><p><button class="lb-btn" onclick="borrow(\'' + book['bookId'] + '\')">Check out</button></p></div>');
             }
-            setTimeout("$('#results').fadeIn(500)", 500);
+            if (data.length == 0) {
+                $('#results').append('<p>Your search did not match any documents.</p>Suggestions:<ul><li>Make sure all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li></ul>');
+            }
+            setTimeout("$('#results').fadeIn(300)", 300);
         }
 
         function animate() {
@@ -122,15 +130,15 @@
                 'line-height': '60px',
                 'margin-bottom': '8px'
             });
-            $('#btn-search').fadeOut(500);
-            $('#btn-lucky').fadeOut(500);
+            $('#btn-search').fadeOut(300);
+            $('#btn-lucky').fadeOut(300);
         }
 
-        function borrow(bookID) {
+        function borrow(bookId) {
             if ($.hasCookie) {
                 let data = {};
                 data['account'] = $.account;
-                data['bookID'] = bookID;
+                data['bookId'] = bookId;
 
                 $.ajax({
                     method: 'GET',
@@ -138,7 +146,7 @@
                     data: data,
                     timeout: 100000,
                     success: function (data) {
-                        alert(data);
+                        alert(data['result']);
                     },
                     error: function (e) {
                         console.log('ERROR: ', e);
@@ -146,6 +154,15 @@
                 });
             } else {
                 window.open('login');
+            }
+        }
+
+        function parseStatus(status) {
+            switch (status.toLowerCase()) {
+                case '':
+                    return '<span style="color: #ea4335;">{{}}</span>';
+                default:
+                    return '<span style="color: #34a853;">In library</span>';
             }
         }
 

@@ -29,3 +29,5 @@ mvnw.cmd
 
 ### VS Code ###
 .vscode/
+
+*.bat

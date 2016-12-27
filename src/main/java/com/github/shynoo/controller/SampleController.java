@@ -1,6 +1,7 @@
 package com.github.shynoo.controller;
 
 import com.github.shynoo.entity.book.Book;
+import com.github.shynoo.entity.book.BookType;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
 import com.github.shynoo.service.BookService;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 public class SampleController {
@@ -82,25 +84,37 @@ public class SampleController {
     }
 
     @RequestMapping("search")
-    ArrayList<HashMap<String, String>> search(@RequestParam String q) {
-        ArrayList<HashMap<String, String>> results = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("bookName", "Book Name");
-        map.put("bookID", "57158652");
-        map.put("status", "...");
-        results.add(map);
-        results.add(map);
+    List<Book> search(@RequestParam String q) {
+        List<Book> results = new ArrayList<>();
+        if (q.startsWith("type:")) {
+            results.addAll(bookService.searchBookByType(BookType.of(q.substring(5).trim())));
+        } else if (q.startsWith("t:")) {
+            results.addAll(bookService.searchBookByType(BookType.of(q.substring(2).trim())));
+        } else {
+            results.addAll(bookService.searchBookByName(q));
+        }
         return results;
     }
 
     @RequestMapping("feelLucky")
-    String feelLucky() {
-        return "lucky";
+    List<Book> feelLucky() {
+        List<Book> results = new ArrayList<>();
+        int num = new Random().nextInt(2) + 2;
+        for (int i = 0; i < num; i++) {
+            Book book = bookService.getRandomBook();
+            if (!results.contains(book)) {
+                results.add(book);
+            }
+        }
+        return results;
     }
 
     @RequestMapping("borrow")
-    String borrow(@RequestParam String account, @RequestParam String bookID) {
-        return "success";
+    HashMap<String, Object> borrow(@RequestParam String account, @RequestParam String bookId) {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        boolean result = userService.borrowBook(account, bookId).status == ResultStatus.SUCCESS.status;
+        map.put("result", result);
+        return map;
     }
 
     // **********

@@ -134,10 +134,6 @@ hr {
     border-bottom: 1px solid #ddd;
 }
 
-table tr th {
-    font-weight: normal;
-}
-
 button.lb-btn {
     border: none;
     color: #4285f4;

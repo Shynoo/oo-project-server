@@ -26,7 +26,7 @@ public enum BookType{
     
     public static BookType of(String name){
         for (BookType type : BookType.values()){
-            if (type.typeName.equals(name)) {
+            if (type.typeName.equalsIgnoreCase(name)) {
                 return type;
             }
         }

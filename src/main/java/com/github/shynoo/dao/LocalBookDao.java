@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service("bookDao")
@@ -101,7 +102,9 @@ public class LocalBookDao implements BookDao{
     public Book getRandomUnBorrowedBook(){
         for (Book b:books.values()){
             if (b.getBookStatus().equals(BookStatus.IN_LIBIRARY)){
-                return b;
+                if(new Random().nextDouble() < 0.3) {
+                    return b;
+                }
             }
         }
         throw new NullPointerException("No new Book to choose!");

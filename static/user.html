@@ -147,7 +147,7 @@
                 url: 'user/' + $.account,
                 timeout: 100000,
                 success: function (data) {
-                    console.log('user profile: ' + data);
+                    console.log('user profile: ', data);
                     $('#user-name').text(data['userName']);
                     $('#user-type').text(data['userType']);
                     $('#max-books').text(data['maxBooks']);
@@ -165,10 +165,10 @@
                 url: 'user/' + $.account + '/books',
                 timeout: 100000,
                 success: function (books) {
-                    console.log('borrowed books: ' + books);
+                    console.log('borrowed books: ', books);
                     let tb_borrowedBooks = $('#borrowed-books');
-                    for (book in books) {
-                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['borrowedDate'] + '</td><td><button class="lb-btn">Return</button></td></tr>');
+                    for (book of books) {
+                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['borrowedDate'] + '</td><td></td><td><button class="lb-btn">Return</button></td></tr>');
                     }
                 },
                 error: function (e) {
@@ -183,7 +183,7 @@
                 url: 'users',
                 timeout: 100000,
                 success: function (users) {
-                    console.log('users: ' + users);
+                    console.log('users: ', users);
                     let tb_users = $('#users');
                     for (user in users) {
                         tb_borrowedBooks.append('<tr><td>' + book['id'] + '</td><td>' + book['name'] + '</td><td>' + book['userType'] + '</td><td><button class="lb-btn">Upgrade</button></td></tr>');
