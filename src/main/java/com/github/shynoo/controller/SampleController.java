@@ -4,6 +4,7 @@ import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookType;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
+import com.github.shynoo.entity.user.UserType;
 import com.github.shynoo.service.BookService;
 import com.github.shynoo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -75,12 +77,17 @@ public class SampleController {
     @RequestMapping("user/{account}/books")
     List<Book> getBooks(@PathVariable String account) {
         List<Book> books = userService.getUserAllBorrowingBooks(account);
-        System.out.println(books);
-        System.out.println(books.size());
-        for (Book book : books) {
-            System.out.println(book.getName());
-        }
         return books;
+    }
+
+    @RequestMapping("isAdmin")
+    boolean isAdmin(@RequestParam String account) {
+        return userService.getUserById(account).userType.equals(UserType.ADMIN);
+    }
+
+    @RequestMapping("allUsers")
+    Map<String, User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @RequestMapping("search")
@@ -121,10 +128,8 @@ public class SampleController {
 
     @RequestMapping("addBook")
     boolean addBook(@RequestParam String account, @RequestParam String bookName, @RequestParam String bookType) {
-        return userService
-                .addBook(userService.getUserById(account),
-                        Book.newBook().name(bookName).type(BookType.of(bookType)).build())
-                .equals(ResultStatus.SUCCESS);
+        return userService.addBook(userService.getUserById(account),
+                Book.newBook().name(bookName).type(BookType.of(bookType)).build()).equals(ResultStatus.SUCCESS);
     }
 
     // **********

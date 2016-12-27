@@ -18,6 +18,10 @@
             border-radius: 0;
             padding: 5px 8px 6px;
         }
+        
+        .admin-only {
+            display: none;
+        }
 
     </style>
 </head>
@@ -57,20 +61,19 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Books</div>
+            <div class="panel-heading">My Books</div>
             <div class="panel-body">
                 <table id="borrowed-books" class="table table-striped">
                     <tr>
                         <th>Book ID</th>
                         <th>Book Name</th>
                         <th>Date Checked Out</th>
-                        <th>Date Expected to Return</th>
                         <th>Operation</th>
                     </tr>
                 </table>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default admin-only">
             <div class="panel-heading">User Management</div>
             <div class="panel-body">
                 <table id="users" class="table table-striped">
@@ -83,7 +86,39 @@
                 </table>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default admin-only">
+            <div class="panel-heading">Book Management</div>
+            <div class="panel-body">
+                <table id="all-books" class="table table-striped">
+                    <tr>
+                        <th>Book ID</th>
+                        <th>Book Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Operations</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default admin-only">
+            <div class="panel-heading">Add User</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="User ID">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="User Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Level (normal, advanced or admin)">
+                </div>
+                <button class="btn blue" onclick="">Add</button>
+            </div>
+        </div>
+        <div class="panel panel-default admin-only">
             <div class="panel-heading">Add Book</div>
             <div class="panel-body">
                 <div class="form-group">
@@ -105,6 +140,24 @@
             if ($.hasCookie) {
                 getProfile();
                 getBooks();
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'isAdmin',
+                    timeout: 100000,
+                    data: {
+                        'account': $.account
+                    },
+                    success: function (isAdmin) {
+                        if (isAdmin) {
+                            $('.admin-only').css('display', 'inherit');
+                            getAllUsers();
+                        }
+                    },
+                    error: function (e) {
+                        console.log('ERROR: ', e);
+                    }
+                });
             }
 
             // Events
@@ -169,7 +222,10 @@
                     let tb_borrowedBooks = $('#borrowed-books');
                     tb_borrowedBooks.children('tbody').children().slice(1).remove();
                     for (book of books) {
-                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['borrowedDate'] + '</td><td></td><td><button class="lb-btn" onclick="returnBook(\'' + book['bookId'] + '\');">Return</button></td></tr>');
+                        tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseDate(book['borrowedDate']) + '</td><td><button class="lb-btn" onclick="returnBook(\'' + book['bookId'] + '\');">Return</button></td></tr>');
+                    }
+                    if (books.length == 0) {
+                        tb_borrowedBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
                     }
                 },
                 error: function (e) {
@@ -178,16 +234,49 @@
             });
         }
 
-        function getUsers() {
+        function parseDate(localDate) {
+            return localDate['year'] + '-' + localDate['monthValue'] + '-' + localDate['dayOfMonth'];
+        }
+
+        function getAllUsers() {
             $.ajax({
                 method: 'GET',
-                url: 'users',
+                url: 'allUsers',
                 timeout: 100000,
                 success: function (users) {
                     console.log('users: ', users);
                     let tb_users = $('#users');
-                    for (user in users) {
-                        tb_borrowedBooks.append('<tr><td>' + book['id'] + '</td><td>' + book['name'] + '</td><td>' + book['userType'] + '</td><td><button class="lb-btn">Upgrade</button></td></tr>');
+                    tb_users.children('tbody').children().slice(1).remove();
+                    for (id in users) {
+                        if (users.hasOwnProperty(id)) {
+                            let user = users[id];
+                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn">Delete</button></td></tr>');
+                        }
+                    }
+                    if (users.length == 0) {
+                        tb_users.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function getAllBooks() {
+            $.ajax({
+                method: 'GET',
+                url: 'allBooks',
+                timeout: 100000,
+                success: function (books) {
+                    console.log('all books: ', books);
+                    let tb_allBooks = $('#all-books');
+                    tb_allBooks.children('tbody').children().slice(1).remove();
+                    for (book of books) {
+                        tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['bookType'] + '</td><td>' + book['bookStatus'] + '</td><td><button class="lb-btn" onclick="returnBook(\'' + book['bookId'] + '\');">Return</button></td></tr>');
+                    }
+                    if (books.length == 0) {
+                        tb_allBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
                     }
                 },
                 error: function (e) {
@@ -212,6 +301,17 @@
                     console.log('ERROR: ', e);
                 }
             });
+        }
+
+        function parseUserType(type) {
+            switch (type) {
+                case 'NORMAL':
+                    return 'Normal';
+                case 'ADVANCE':
+                    return 'Advanced';
+                case 'ADMIN':
+                    return 'Admin';
+            }
         }
 
     </script>
