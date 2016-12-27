@@ -1,5 +1,6 @@
 package com.github.shynoo.dao;
 
+import com.github.shynoo.entity.user.Admin;
 import com.github.shynoo.entity.user.User;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class LocalUserDao implements UserDao{
             .name("张宇").password("123").build();
         addUser(user);
         
-        user = User.getFactory().createAdvanceUser().id("admin1")
+        user = Admin.newAdmin().id("admin1")
             .name("管理员01").password("123").build();
         addUser(user);
         

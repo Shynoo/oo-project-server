@@ -4,7 +4,7 @@ public class Admin extends User{
     
     public final UserType userType = UserType.ADMIN;
     
-    public UserBuilder newAdmin(){
+    public static UserBuilder newAdmin(){
         return new UserBuilder().type(UserType.ADMIN);
     }
     
