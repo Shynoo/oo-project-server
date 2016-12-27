@@ -114,5 +114,10 @@ public class LocalBookDao implements BookDao{
     
     }
     
+    @Override
+    public Map getAllBooks(){
+        return books;
+    }
+    
     
 }

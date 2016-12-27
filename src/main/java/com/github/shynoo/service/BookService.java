@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("bookService")
 public class BookService{
@@ -31,4 +32,7 @@ public class BookService{
         return bookDao.getRandomUnBorrowedBook();
     }
     
+    public Map<String,Book> getAllBooks(){
+        return bookDao.getAllBooks();
+    }
 }

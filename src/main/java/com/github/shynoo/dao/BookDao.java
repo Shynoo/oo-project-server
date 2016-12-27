@@ -4,6 +4,7 @@ import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookType;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookDao{
     
@@ -18,6 +19,8 @@ public interface BookDao{
     int deleteBook(Book book);
     
     Book getRandomUnBorrowedBook();
+    
+    Map getAllBooks();
     
     void initData();
 }
