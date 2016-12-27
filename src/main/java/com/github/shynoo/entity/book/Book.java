@@ -3,7 +3,7 @@ package com.github.shynoo.entity.book;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Random;
 
 @Data
@@ -17,7 +17,7 @@ public class Book{
     
     private BookStatus bookStatus = BookStatus.IN_LIBIRARY;
     
-    private Date borrowedDate;
+    private LocalDate borrowedDate;
     
     public void giveBack(){
         this.bookStatus = BookStatus.IN_LIBIRARY;

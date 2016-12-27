@@ -12,6 +12,7 @@ import com.github.shynoo.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class UserService{
         }
         borrowingDao.borrowOut(user.getId(),book.getBookId());
         book.setBookStatus(BookStatus.BORROWING_OUT);
-        book.setBorrowedDate(new Date());
+        book.setBorrowedDate(LocalDate.now());
         return ResultStatus.SUCCESS;
     }
     public ResultStatus borrowBook(String user,String book){
