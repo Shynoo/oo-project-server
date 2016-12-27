@@ -84,7 +84,7 @@ public class UserService{
     }
     
     public ResultStatus borrowBook(User user,Book book){
-        if ((!checkUserCouldBorrowBook(user))&&(!checkBookCouldBorrowed(book))){
+        if ((!checkUserCouldBorrowBook(user))||(!checkBookCouldBorrowed(book))){
             return ResultStatus.FAILURE;
         }
         borrowingDao.borrowOut(user.getId(),book.getBookId());
