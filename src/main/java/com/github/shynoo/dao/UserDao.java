@@ -3,6 +3,8 @@ package com.github.shynoo.dao;
 
 import com.github.shynoo.entity.user.User;
 
+import java.util.Map;
+
 public interface UserDao{
     
     String getUserPassword(String id);
@@ -14,4 +16,6 @@ public interface UserDao{
     int deleteUser(User user);
     
     void initData();
+    
+    Map<String,User> getAllUsers();
 }

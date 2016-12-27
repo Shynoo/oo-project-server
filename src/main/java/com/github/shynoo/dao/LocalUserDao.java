@@ -4,6 +4,7 @@ import com.github.shynoo.entity.user.Admin;
 import com.github.shynoo.entity.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,6 +46,15 @@ public class LocalUserDao implements UserDao{
             .name("管理员01").password("123").build();
         addUser(user);
         
+    }
+    
+    @Override
+    public Map<String, User> getAllUsers(){
+        Map<String,User> map=new HashMap<>();
+        for (String s:users.keySet()){
+            map.put(s,users.get(s));
+        }
+        return map;
     }
     
     

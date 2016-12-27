@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
 public class UserService{
@@ -163,7 +164,11 @@ public class UserService{
         return nls;
     }
     
-    public Book getRandomUnBorrowedBook(){
+    public Map<String, User> getAllUsers(){
+        return userDao.getAllUsers();
+    }
+        
+        public Book getRandomUnBorrowedBook(){
         return bookDao.getRandomUnBorrowedBook();
     }
     
