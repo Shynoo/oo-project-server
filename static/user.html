@@ -40,7 +40,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Account Information</div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-striped">
                     <tr>
                         <td>User Name</td>
                         <td id="user-name">Loading ...</td>
@@ -152,6 +152,7 @@
                         if (isAdmin) {
                             $('.admin-only').css('display', 'inherit');
                             getAllUsers();
+                            getAllBooks();
                         }
                     },
                     error: function (e) {
@@ -247,10 +248,10 @@
                     console.log('users: ', users);
                     let tb_users = $('#users');
                     tb_users.children('tbody').children().slice(1).remove();
-                    for (id in users) {
-                        if (users.hasOwnProperty(id)) {
-                            let user = users[id];
-                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn">Delete</button></td></tr>');
+                    for (key in users) {
+                        if (users.hasOwnProperty(key)) {
+                            let user = users[key];
+                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn" onclick="upgrade(\'' + user['id'] + '\')">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="downgrade(\'' + user['id'] + '\')">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="deleteUser(\'' + user['id'] + '\')">Delete</button></td></tr>');
                         }
                     }
                     if (users.length == 0) {
@@ -272,8 +273,11 @@
                     console.log('all books: ', books);
                     let tb_allBooks = $('#all-books');
                     tb_allBooks.children('tbody').children().slice(1).remove();
-                    for (book of books) {
-                        tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['bookType'] + '</td><td>' + book['bookStatus'] + '</td><td><button class="lb-btn" onclick="returnBook(\'' + book['bookId'] + '\');">Return</button></td></tr>');
+                    for (key in books) {
+                        if (books.hasOwnProperty(key)) {
+                            let book = books[key];
+                            tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseBookType(book['bookType']) + '</td><td>' + parseStatus(book['bookStatus']) + '</td><td><button class="lb-btn" onclick="deleteBook(\'' + book['bookId'] + '\');">Delete</button></td></tr>');
+                        }
                     }
                     if (books.length == 0) {
                         tb_allBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
@@ -311,6 +315,24 @@
                     return 'Advanced';
                 case 'ADMIN':
                     return 'Admin';
+            }
+        }
+
+        function parseBookType(type) {
+            switch (type) {
+                case 'COMPUTER_SCIENCE':
+                    return 'Computer Science';
+                default:
+                    return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+            }
+        }
+
+        function parseStatus(status) {
+            switch (status) {
+                case 'BORROWING_OUT':
+                    return '<span style="color: #ea4335;">On loan</span>';
+                default:
+                    return '<span style="color: #34a853;">Available</span>';
             }
         }
 

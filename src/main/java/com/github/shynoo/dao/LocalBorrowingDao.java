@@ -33,12 +33,11 @@ public class LocalBorrowingDao implements BorrowingDao{
     }
     
     private void initData(){
-        borrowOut("1",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowOut("1",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowOut("1",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowOut("foo",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowOut("foo",bookDao.getRandomUnBorrowedBook().getBookId());
         borrowOut("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
         borrowOut("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowOut("1",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowOut("admin",bookDao.getRandomUnBorrowedBook().getBookId());
     }
     
     @Override

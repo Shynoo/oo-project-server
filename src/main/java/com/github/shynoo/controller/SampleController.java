@@ -90,6 +90,11 @@ public class SampleController {
         return userService.getAllUsers();
     }
 
+    @RequestMapping("allBooks")
+    Map<String, Book> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
     @RequestMapping("search")
     List<Book> search(@RequestParam String q) {
         List<Book> results = new ArrayList<>();
