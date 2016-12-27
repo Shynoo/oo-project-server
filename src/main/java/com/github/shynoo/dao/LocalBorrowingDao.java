@@ -65,7 +65,12 @@ public class LocalBorrowingDao implements BorrowingDao{
     
     @Override
     public List<String> getUserAllBorrowedBooks(String user){
-        return userBooks.get(user);
+        List ls= userBooks.get(user);
+        if (ls==null){
+            ls=new LinkedList();
+            userBooks.put(user,ls);
+        }
+        return ls;
     }
     
     @Override

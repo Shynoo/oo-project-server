@@ -50,6 +50,7 @@ public class UserService{
         borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
         borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
     }
+    
     public User getUserById(String id){
         if (!isInited){
             isInited=true;
@@ -83,9 +84,9 @@ public class UserService{
     }
     
     public ResultStatus borrowBook(User user,Book book){
-//        if ((!checkUserCouldBorrowBook(user))&&(!checkBookCouldBorrowed(book))){
-//            return ResultStatus.FAILURE;
-//        }
+        if ((!checkUserCouldBorrowBook(user))&&(!checkBookCouldBorrowed(book))){
+            return ResultStatus.FAILURE;
+        }
         borrowingDao.borrowOut(user.getId(),book.getBookId());
         book.setBookStatus(BookStatus.BORROWING_OUT);
         return ResultStatus.SUCCESS;
@@ -101,10 +102,10 @@ public class UserService{
     }
     
     public boolean checkBookCouldBorrowed(Book book){
-        if (book.getBookStatus().equals(BookStatus.BORROWING_OUT)){
-            return false;
+        if (book.getBookStatus().equals(BookStatus.IN_LIBIRARY)){
+            return true;
         }
-        return true;
+        return false;
     }
     
     
@@ -128,7 +129,7 @@ public class UserService{
     
     public boolean checkUserCouldBorrowBook(User user){
         List<String> ls=borrowingDao.getUserAllBorrowedBooks(user.getId());
-        if (ls!=null||ls.size()>=user.getUserType().maxBorrowingBookNumber){
+        if (ls!=null&&ls.size()>=user.getUserType().maxBorrowingBookNumber){
             return false;
         }
         Date now=new Date();
