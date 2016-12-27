@@ -159,10 +159,10 @@
 
         function parseStatus(status) {
             switch (status.toLowerCase()) {
-                case '':
-                    return '<span style="color: #ea4335;">{{}}</span>';
+                case 'BORROWING_OUT'.toLowerCase():
+                    return '<span style="color: #ea4335;">On loan</span>';
                 default:
-                    return '<span style="color: #34a853;">In library</span>';
+                    return '<span style="color: #34a853;">Available</span>';
             }
         }
 
