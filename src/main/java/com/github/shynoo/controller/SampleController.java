@@ -123,7 +123,7 @@ public class SampleController {
     boolean addBook(@RequestParam String account, @RequestParam String bookName, @RequestParam String bookType) {
         return userService
                 .addBook(userService.getUserById(account),
-                        Book.newBuilder().name(bookName).type(BookType.of(bookType)).build())
+                        Book.newBook().name(bookName).type(BookType.of(bookType)).build())
                 .equals(ResultStatus.SUCCESS);
     }
 

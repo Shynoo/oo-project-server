@@ -15,12 +15,13 @@ public class User{
     
     private final static UserFactory factory = new UserFactory();
     
-    public static UserBuilder newUser(){
-        return new UserBuilder();
-    }
     
     public static UserFactory getFactory(){
         return factory;
+    }
+    
+    public boolean couldManageBook(){
+        return userType.isAllowAddBooks();
     }
     
     public boolean couldManageUser(){
