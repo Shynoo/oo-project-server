@@ -89,6 +89,7 @@ public class UserService{
         }
         borrowingDao.borrowOut(user.getId(),book.getBookId());
         book.setBookStatus(BookStatus.BORROWING_OUT);
+        book.setBorrowedDate(new Date());
         return ResultStatus.SUCCESS;
     }
     public ResultStatus borrowBook(String user,String book){
@@ -96,8 +97,9 @@ public class UserService{
     }
         
         
-        public ResultStatus giveBackBook(Book book){
-        borrowingDao.getBookOwner(book.getBookId());
+    public ResultStatus giveBackBook(Book book){
+        book.setBookStatus(BookStatus.IN_LIBIRARY);
+        borrowingDao.giveBack(book.getBookId());
         return ResultStatus.SUCCESS;
     }
     

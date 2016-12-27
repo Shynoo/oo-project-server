@@ -59,6 +59,7 @@ public class LocalBorrowingDao implements BorrowingDao{
     public int giveBack(String book){
         userBooks.get(bookToUser.get(book)).remove(book);
         bookToUser.remove(book);
+        bookOutDate.remove(book);
         return 0;
     }
     
