@@ -32,6 +32,14 @@ public class UserService{
         
     }
     
+    private void initData(){
+        borrowBook("foo",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("foo",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
+        borrowBook("admin",bookDao.getRandomUnBorrowedBook().getBookId());
+    }
+    
     public Result checkPassword(String id, String password){
         String realPasswd = userDao.getUserPassword(id);
         if (password.equals(realPasswd)) {
@@ -44,14 +52,6 @@ public class UserService{
     
     boolean isInited=false;
     
-    private void initData(){
-        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
-        borrowBook("1",bookDao.getRandomUnBorrowedBook().getBookId());
-    }
     
     public User getUserById(String id){
         if (!isInited){
