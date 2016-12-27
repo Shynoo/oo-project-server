@@ -106,7 +106,7 @@ public class LocalBookDao implements BookDao{
                 ls.add(b);
             }
         }
-        if (ls==null){
+        if (ls==null||ls.size()==0){
             throw new NullPointerException("No new Book to choose!");
         }
         int size=new Random().nextInt(ls.size());
