@@ -167,6 +167,7 @@
                 success: function (books) {
                     console.log('borrowed books: ', books);
                     let tb_borrowedBooks = $('#borrowed-books');
+                    tb_borrowedBooks.children('tbody').children().slice(1).remove();
                     for (book of books) {
                         tb_borrowedBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + book['borrowedDate'] + '</td><td></td><td><button class="lb-btn" onclick="returnBook(\'' + book['bookId'] + '\');">Return</button></td></tr>');
                     }
@@ -205,6 +206,7 @@
                 timeout: 100000,
                 success: function (result) {
                     console.log('return book result: ', result);
+                    getBooks()
                 },
                 error: function (e) {
                     console.log('ERROR: ', e);

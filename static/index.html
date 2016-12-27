@@ -147,6 +147,11 @@
                     timeout: 100000,
                     success: function (result) {
                         console.log(result);
+                        if (result) {
+                            alert('success');
+                        } else {
+                            alert('failed');
+                        }
                     },
                     error: function (e) {
                         console.log('ERROR: ', e);
