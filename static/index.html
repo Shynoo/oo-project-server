@@ -42,7 +42,7 @@
             $('#btn-login').click(function () {
                 if ($.hasCookie) {
                     Cookies.remove('lib-account');
-                    window.location.reload();
+                    detectCookies();
                 } else {
                     window.location.href = 'login';
                 }
