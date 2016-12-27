@@ -7,6 +7,6 @@ public interface BorrowingDao{
     int borrowOut(String userId, String bookId);
     int giveBack(String bookId);
     List<String> getUserAllBorrowedBooks(String userId);
-    String getBookOwner(String bookId);
+    String getBookOwnerId(String bookId);
     Date bookOutDay(String id);
 }

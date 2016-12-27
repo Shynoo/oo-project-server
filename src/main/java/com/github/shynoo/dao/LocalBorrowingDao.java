@@ -75,7 +75,7 @@ public class LocalBorrowingDao implements BorrowingDao{
     }
     
     @Override
-    public String getBookOwner(String book){
+    public String getBookOwnerId(String book){
         return bookToUser.get(book);
     }
     
