@@ -145,8 +145,8 @@
                     url: 'borrow',
                     data: data,
                     timeout: 100000,
-                    success: function (data) {
-                        alert(data['result']);
+                    success: function (result) {
+                        console.log(result);
                     },
                     error: function (e) {
                         console.log('ERROR: ', e);

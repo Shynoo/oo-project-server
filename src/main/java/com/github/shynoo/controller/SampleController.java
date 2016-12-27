@@ -110,11 +110,21 @@ public class SampleController {
     }
 
     @RequestMapping("borrow")
-    HashMap<String, Object> borrow(@RequestParam String account, @RequestParam String bookId) {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        boolean result = userService.borrowBook(account, bookId).status == ResultStatus.SUCCESS.status;
-        map.put("result", result);
-        return map;
+    boolean borrow(@RequestParam String account, @RequestParam String bookId) {
+        return userService.borrowBook(account, bookId).equals(ResultStatus.SUCCESS);
+    }
+
+    @RequestMapping("return")
+    boolean returnBook(@RequestParam String bookId) {
+        return userService.giveBackBook(bookService.getBookById(bookId)).equals(ResultStatus.SUCCESS);
+    }
+
+    @RequestMapping("addBook")
+    boolean addBook(@RequestParam String account, @RequestParam String bookName, @RequestParam String bookType) {
+        return userService
+                .addBook(userService.getUserById(account),
+                        Book.newBuilder().name(bookName).type(BookType.of(bookType)).build())
+                .equals(ResultStatus.SUCCESS);
     }
 
     // **********
