@@ -65,9 +65,9 @@ public class SampleController {
         User user = userService.getUserById(account);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userName", user.getName());
-        map.put("userType", user.userType.toString());
-        map.put("maxBooks", user.userType.maxBorrowingBookNumber);
-        map.put("maxDays", user.userType.maxBorrowingDay);
+        map.put("userType", user.getUserType().toString());
+        map.put("maxBooks", user.getUserType().maxBorrowingBookNumber);
+        map.put("maxDays", user.getUserType().maxBorrowingDay);
         return map;
     }
 
@@ -79,7 +79,7 @@ public class SampleController {
 
     @RequestMapping("isAdmin")
     boolean isAdmin(@RequestParam String account) {
-        return userService.getUserById(account).userType.equals(UserType.ADMIN);
+        return userService.getUserById(account).getUserType().equals(UserType.ADMIN);
     }
 
     @RequestMapping("allUsers")

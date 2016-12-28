@@ -1,0 +1,53 @@
+@startuml
+
+
+class User{
+    - String id
+    - String password
+    - String name
+    - UserType userType
+}
+class Admin{
+
+}
+enum UserType{
+    + Normal
+    + Advance
+    + Admin
+    __
+    + int maxBorrowBooks
+    + int maxBorrowDays
+    - boolean couldManageUsers
+    - boolean couldManageBooks
+
+}
+
+User *-- UserType
+
+User <|-- Admin
+
+class Book{
+    - String id
+    - String name
+    - BookType bookType
+    - BookStatus bookStatus
+}
+enum BookType{
+    + Math
+    + English
+    + Physics
+    + Chemistry
+    + Biology
+    + Computer Science
+    __
+    + long id
+    + String typeName
+}
+class BookStatus{
+
+}
+
+Book *-- BookType
+Book *-- BookStatus
+@enduml
+

@@ -11,7 +11,7 @@ public class User{
     
     private transient String password;
     
-    public UserType userType;
+    private UserType userType;
     
     private final static UserFactory factory = new UserFactory();
     

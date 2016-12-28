@@ -1,0 +1,21 @@
+
+@startuml
+
+(*)--> "borrowBookTest" 
+--> ===b1===
+--> "用户可以借书"
+--> ===b2===
+===b1=== --> "书籍可以被借阅"
+--> ===b2===
+
+--> "用户借书"
+if "用户所借的书中包含此book" then
+-down->[是] if "此book的状态为借出" then
+    -d->[是] (*)
+    else 
+        -down>[否] "用例错误"
+    endif
+else 
+    ->[否] "用例错误"
+endif
+@enduml

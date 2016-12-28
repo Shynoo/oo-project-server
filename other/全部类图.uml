@@ -1,0 +1,131 @@
+@startuml
+class SampleController{
+
+}
+class UserService{
+    + boolean checkUserPassword()
+    + User getUserById()
+    + int addUser()
+    + int deletUser()
+    + int borrowBook()
+    + int giveBackBook()
+    + int addBook()
+    + int deleteBook()
+    + List<Book> getUserAllBorrowingBooks()
+    + Map getAllUsers()
+
+}
+SampleController *-- UserService
+
+class BookService{
+    List<Book> searchBookByName()
+    List<Book> searchBookByType()
+    Book getBookById()
+}
+SampleController *-- BookService
+
+interface UserDao{
+    User getUserById()
+    String getUserPassword()
+    int addUser()
+    int deletUser()
+    int updateUser()
+}
+UserService -- UserDao 
+BookService -- UserDao
+class LocalUserDao{
+
+}
+UserDao <|.. LocalUserDao
+
+interface BookDao{
+    Book getBookById()
+    List<Book> getBooksByName()
+    List<Book> searchBookByName()
+    List<Book> searchBookByType()
+    int addBook()
+    int deletBook()
+    int updateBook()
+}
+UserService -- BookDao 
+BookService -- BookDao
+
+class LocalBookDao{
+
+}
+BookDao <|.. LocalBookDao
+
+interface BorrowingDao{
+    + int borrowOut()
+    + int giveBack()
+    + List<String> getUserAllBorrowedBooks()
+    + String getBookOwner();
+    + Date bookOutDay();
+}
+UserService -- BorrowingDao
+
+class LocalBorrowingDao{
+    
+}
+BorrowingDao <|.. LocalBorrowingDao
+
+
+
+
+class User{
+    + UserFactory getFactory()
+    + boolean couldManageUser()
+    + boolean couldManageBook()
+}
+
+class UserFactory{
+    + User creatNormalUser()
+    + User creatAdvanceUser()
+}
+User o-- UserFactory
+
+class UserBuilder{
+    
+}
+UserFactory o-- UserBuilder
+User o-- UserBuilder
+
+enum UserType{
+    Normal
+    Advance
+    Admin
+}
+User *-- UserType 
+
+class Admin{
+
+}
+User o-- Admin
+
+class Book{
+    + BookBuilder newBook()
+    + String generateBookId()
+}
+
+class BookBuilder{
+
+}
+Book o-- BookBuilder
+
+enum BookStatus{
+    InLibrary
+    BorrowOut
+}
+Book *-- BookStatus
+
+enum BookType{
+    Math
+    English
+    CS
+    Physics
+    Chemistry
+    Biology
+}
+Book *-- BookType
+
+@endurl
