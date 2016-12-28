@@ -26,19 +26,19 @@ public class LocalUserDao implements UserDao{
     @Override
     public void initData(){
         
-        User user = User.getFactory().createNormalUser().id("foo")
+        User user = User.createNormalUserBuilder().id("foo")
             .name("Someone").password("123").build();
         addUser(user);
         
-        user = User.getFactory().createAdvanceUser().id("11310388")
+        user = User.createNormalUserBuilder().id("11310388")
             .name("邓收港").password("123").build();
         addUser(user);
         
-        user = User.getFactory().createAdvanceUser().id("11310057")
+        user = User.createNormalUserBuilder().id("11310057")
             .name("张宇").password("123").build();
         addUser(user);
         
-        user = Admin.newAdmin().id("admin")
+        user = Admin.createAdminUserBuilder().id("admin")
             .name("Administrator").password("123").build();
         addUser(user);
         
