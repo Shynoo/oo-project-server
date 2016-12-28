@@ -1,0 +1,45 @@
+@startuml
+package book <<cloud>>{
+    class Book
+    class BookType
+    class BookStatus
+    class BookBuilder
+}
+
+class Book{
+    + BookBuilder newBook()
+    + (static) String generateBookId()
+}
+
+class BookBuilder{
+    + BookBuilder id()
+    + BookBuilder name()
+    + BookBuilder status()
+    + BookBuilder type()
+    + Book build()
+}
+Book o-* BookBuilder
+
+enum BookType{
+    + MATH
+    + ENGLISH
+    + PHYSICS
+    + CHEMISREY
+    + BIOLOGY
+    + COMPUTER_SCIENCE
+    __
+    + long id
+    + String typeName
+    + BookType of()
+}
+
+enum BookStatus{
+    + IN_LIBRARY
+    + BORROWED_OUT
+}
+
+Book *-- BookStatus
+Book *-- BookType
+
+
+@enduml
