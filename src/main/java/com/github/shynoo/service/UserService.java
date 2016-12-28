@@ -33,7 +33,7 @@ public class UserService{
         
     }
     
-    private void initData(){
+    protected void initData(){
         borrowBook("foo",bookDao.getRandomUnBorrowedBook().getBookId());
         borrowBook("foo",bookDao.getRandomUnBorrowedBook().getBookId());
         borrowBook("11310057",bookDao.getRandomUnBorrowedBook().getBookId());
