@@ -1,5 +1,6 @@
 package com.github.shynoo.ooad.service;
 
+import com.github.shynoo.ooad.controller.SampleController;
 import com.github.shynoo.ooad.entity.book.Book;
 import com.github.shynoo.ooad.entity.book.BookStatus;
 import com.github.shynoo.ooad.entity.result.Result;
@@ -18,6 +19,9 @@ import java.util.List;
 public class UserServiceTest{
     
     @Autowired
+    SampleController sampleController;
+    
+    @Autowired
     UserService userService;
     
     @Autowired
@@ -26,13 +30,11 @@ public class UserServiceTest{
     
     @Test
     public void userLogInTest(){
-        
         String id = "1";
         String password = "123";
         Result r = userService.checkUserPassword(id, password);
         User u = (User) r.get();
         Assert.assertEquals(u, userService.getUserById(id));
-        
     }
     
     @Test

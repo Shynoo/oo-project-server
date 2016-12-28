@@ -19,11 +19,11 @@ public class User{
         return factory;
     }
     
-    public static UserBuilder createNormalUserBuilder(){
+    public static UserBuilder createNormalUser(){
         return factory.createNormalUser();
     }
     
-    public static UserBuilder createAdvanceUserBuilder(){
+    public static UserBuilder createAdvanceUser(){
         return factory.createAdvanceUser();
     }
     

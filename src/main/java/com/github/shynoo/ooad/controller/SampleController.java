@@ -29,7 +29,7 @@ public class SampleController {
     private BookService bookService;
 
     @RequestMapping("/login")
-    String loginPage() {
+    public String loginPage() {
         try {
             return htmlCompress(fileRead("static/login.html"));
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class SampleController {
     }
 
     @RequestMapping("/doLogin")
-    HashMap<String, Object> doLogin(@RequestParam String account, @RequestParam String password) {
+    public HashMap<String, Object> doLogin(@RequestParam String account, @RequestParam String password) {
         HashMap<String, Object> map = new HashMap<String, Object>();
         if (checkAccount(account, password)) {
             map.put("result", true);
@@ -51,7 +51,7 @@ public class SampleController {
     }
 
     @RequestMapping("user")
-    String userPage() {
+    public String userPage() {
         try {
             return htmlCompress(fileRead("static/user.html"));
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class SampleController {
     }
 
     @RequestMapping("user/{account}")
-    HashMap<String, Object> getProfile(@PathVariable String account) {
+    public HashMap<String, Object> getProfile(@PathVariable String account) {
         User user = userService.getUserById(account);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userName", user.getName());
@@ -72,34 +72,34 @@ public class SampleController {
     }
 
     @RequestMapping("user/{account}/books")
-    List<Book> getBooks(@PathVariable String account) {
+    public List<Book> getBooks(@PathVariable String account) {
         List<Book> books = userService.getUserAllBorrowingBooks(account);
         return books;
     }
 
     @RequestMapping("isAdmin")
-    boolean isAdmin(@RequestParam String account) {
+    public boolean isAdmin(@RequestParam String account) {
         return userService.getUserById(account).getUserType().equals(UserType.ADMIN);
     }
 
     @RequestMapping("allUsers")
-    Map<String, User> getAllUsers() {
+    public Map<String, User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @RequestMapping("allBooks")
-    Map<String, Book> getAllBooks() {
+    public Map<String, Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
     @RequestMapping("deleteUser/{id}")
-    boolean deleteUser(@PathVariable String id) {
+    public boolean deleteUser(@PathVariable String id) {
         return userService.deletUser(userService.getUserById("admin"), userService.getUserById(id))
                 .equals(ResultStatus.SUCCESS);
     }
 
     @RequestMapping("deleteBook/{id}")
-    boolean deleteBook(@PathVariable String id) {
+    public boolean deleteBook(@PathVariable String id) {
         return userService.deleteBook(userService.getUserById("admin"), bookService.getBookById(id))
                 .equals(ResultStatus.SUCCESS);
     }
@@ -111,7 +111,7 @@ public class SampleController {
     }
 
     @RequestMapping("search")
-    List<Book> search(@RequestParam String q) {
+    public List<Book> search(@RequestParam String q) {
         List<Book> results = new ArrayList<>();
         if (q.startsWith("type:")) {
             results.addAll(bookService.searchBookByType(BookType.of(q.substring(5).trim())));
@@ -124,7 +124,7 @@ public class SampleController {
     }
 
     @RequestMapping("feelLucky")
-    List<Book> feelLucky() {
+    public List<Book> feelLucky() {
         List<Book> results = new ArrayList<>();
         int num = new Random().nextInt(2) + 2;
         for (int i = 0; i < num; i++) {
@@ -137,32 +137,32 @@ public class SampleController {
     }
 
     @RequestMapping("borrow")
-    boolean borrow(@RequestParam String account, @RequestParam String bookId) {
+    public boolean borrow(@RequestParam String account, @RequestParam String bookId) {
         return userService.borrowBook(account, bookId).equals(ResultStatus.SUCCESS);
     }
 
     @RequestMapping("return")
-    boolean returnBook(@RequestParam String bookId) {
+    public boolean returnBook(@RequestParam String bookId) {
         return userService.giveBackBook(bookService.getBookById(bookId)).equals(ResultStatus.SUCCESS);
     }
 
     @RequestMapping("addUser")
-    boolean addUsesr(@RequestParam String account, @RequestParam String userName, @RequestParam String password,
+    public boolean addUsesr(@RequestParam String account, @RequestParam String userName, @RequestParam String password,
             @RequestParam String userType) {
         User user = null;
         switch (userType) {
         case "normal":
-            user = User.createNormalUserBuilder().id(account).name(userName).password(password).build();
+            user = User.createNormalUser().id(account).name(userName).password(password).build();
         case "advanced":
-            user = User.createAdvanceUserBuilder().id(account).name(userName).password(password).build();
+            user = User.createAdvanceUser().id(account).name(userName).password(password).build();
         case "admin":
-            user = Admin.createAdminUserBuilder().id(account).name(userName).password(password).build();
+            user = Admin.createAdminUser().id(account).name(userName).password(password).build();
         }
         return userService.addUser(userService.getUserById("admin"), user).equals(ResultStatus.SUCCESS);
     }
 
     @RequestMapping("addBook")
-    boolean addBook(@RequestParam String bookName, @RequestParam String bookType) {
+    public boolean addBook(@RequestParam String bookName, @RequestParam String bookType) {
         return userService.addBook(userService.getUserById("admin"),
                 Book.newBook().name(bookName).type(BookType.of(bookType)).build()).equals(ResultStatus.SUCCESS);
     }
