@@ -16,6 +16,12 @@
 
 ## 用例分析
 
+### 用例图
+
+![usecases](imgs/usecases.jpg)
+
+### 用例分析文档
+
 ![usecasedoc.1](imgs/usecasedoc.1.png)
 
 ![usecasedoc.2](imgs/usecasedoc.2.png)
