@@ -1,6 +1,19 @@
 @startuml
-class SampleController{
 
+package controller <<Cloud>>{
+    class SampleController
+}
+
+class SampleController{
+    __
+    controllerMethod
+    ...
+}
+
+
+package service <<cloud>>{
+    class UserService
+    class BookService
 }
 class UserService{
     + boolean checkUserPassword()
@@ -24,6 +37,17 @@ class BookService{
 }
 SampleController *-- BookService
 
+
+package dao <<cloud>>{
+    interface UserDao
+    class LocalUserDao
+    interface BookDao
+    interface BorrowingDao
+    class LocalBorrowingDao
+    class LocalBookDao
+}
+
+
 interface UserDao{
     User getUserById()
     String getUserPassword()
@@ -34,7 +58,8 @@ interface UserDao{
 UserService -- UserDao 
 BookService -- UserDao
 class LocalUserDao{
-
+    __
+    ...
 }
 UserDao <|.. LocalUserDao
 
@@ -51,7 +76,8 @@ UserService -- BookDao
 BookService -- BookDao
 
 class LocalBookDao{
-
+    __
+    ...
 }
 BookDao <|.. LocalBookDao
 
@@ -65,30 +91,37 @@ interface BorrowingDao{
 UserService -- BorrowingDao
 
 class LocalBorrowingDao{
-    
+    __
+    ...
 }
 BorrowingDao <|.. LocalBorrowingDao
 
 
-
-
-class User{
-    + UserFactory getFactory()
-    + boolean couldManageUser()
-    + boolean couldManageBook()
+package user <<cloud>>{
+    class User
+    class UserFactory
+    class UserBuilder
+    class UserType
+    class Admin
 }
 
-class UserFactory{
+class User{
+    + boolean couldManageUser()
+    + boolean couldManageBook()
     + User creatNormalUser()
     + User creatAdvanceUser()
 }
-User o-- UserFactory
+
+class UserFactory{
+    # User creatNormalUser()
+    # User creatAdvanceUser()
+}
+User *-- UserFactory
 
 class UserBuilder{
     
 }
-UserFactory o-- UserBuilder
-User o-- UserBuilder
+UserFactory *-- UserBuilder
 
 enum UserType{
     Normal
@@ -98,34 +131,49 @@ enum UserType{
 User *-- UserType 
 
 class Admin{
-
+    + User createAdminUser()
 }
-User o-- Admin
+User <|-- Admin
+
+
+
+package book <<cloud>>{
+    class Book
+    class BookType
+    class BookStatus
+    class BookBuilder
+}
 
 class Book{
     + BookBuilder newBook()
-    + String generateBookId()
+    + (static) String generateBookId()
 }
 
 class BookBuilder{
 
 }
+
 Book o-- BookBuilder
 
-enum BookStatus{
-    InLibrary
-    BorrowOut
-}
-Book *-- BookStatus
 
 enum BookType{
-    Math
-    English
-    CS
-    Physics
-    Chemistry
-    Biology
+    + MATH
+    + ENGLISH
+    + PHYSICS
+    + CHEMISREY
+    + BIOLOGY
+    + COMPUTER_SCIENCE
+    __
+    + long id
+    + String typeName
 }
+
+enum BookStatus{
+    + IN_LIBRARY
+    + BORROWED_OUT
+}
+
+Book *-- BookStatus
 Book *-- BookType
 
 @endurl
