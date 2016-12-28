@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class User{
     
-    private String id;
+    protected String id;
     
-    private String name;
+    protected String name;
     
-    private transient String password;
+    protected transient String password;
     
-    private UserType userType;
+    protected UserType userType;
     
     protected final static UserFactory factory = new UserFactory();
     
@@ -26,7 +26,6 @@ public class User{
     public static UserBuilder createAdvanceUserBuilder(){
         return factory.createAdvanceUser();
     }
-    
     
     public boolean couldManageBook(){
         return userType.isAllowManageBooks();

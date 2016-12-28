@@ -162,7 +162,6 @@ class Admin{
 User <|-- Admin
 
 
-
 package book <<cloud>>{
     class Book
     class BookType
@@ -182,9 +181,7 @@ class BookBuilder{
     + BookBuilder type()
     + Book build()
 }
-
-Book -- BookBuilder
-
+Book o-* BookBuilder
 
 enum BookType{
     + MATH
