@@ -14,6 +14,14 @@
 
 ## 需求分析
 
+### 登录
+
+- 用户用id和密码登录并获取相应权限
+
+### 借书
+
+- 
+
 ## 用例分析
 
 ### 用例图
@@ -96,6 +104,17 @@ public class User{
     
     ...
 }
+
+@Data
+public class Admin extends User{
+    
+    protected UserType userType = UserType.ADMIN;
+    
+    public static UserBuilder createAdminUser(){
+        return factory.createAdminUser();
+    }
+    
+}
 ```
 
 在这里使用抽象工厂方法主要是为了屏蔽UserBuilder类的userType(UserType type)方法.
@@ -139,8 +158,9 @@ public class UserBuilder{
 
 ## 顺序图
 
-## 完整类图
 
+
+## 完整类图
 
 ### user 类图
 ![user 类图](./类图/user类图.png)
@@ -190,7 +210,6 @@ public void userLogInTest(){
 ![活动图](./Test活动图/userLogInTest活动图.png)
 
 ## 可扩展性分析
-
 
 ### 加入修改图书信息的功能
 功能描述: 管理员可以修改图书的信息, 如图书name, type等.
