@@ -4,9 +4,9 @@ import com.github.shynoo.entity.user.Admin;
 import com.github.shynoo.entity.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service("userDao")
 public class LocalUserDao implements UserDao{
@@ -46,10 +46,7 @@ public class LocalUserDao implements UserDao{
     
     @Override
     public Map<String, User> getAllUsers(){
-        Map<String,User> map=new HashMap<>();
-        for (String s:users.keySet()){
-            map.put(s,users.get(s));
-        }
+        Map map=users.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
         return map;
     }
     

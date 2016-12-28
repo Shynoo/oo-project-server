@@ -1,5 +1,8 @@
 package com.github.shynoo.entity.book;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public enum BookType{
     
     MATH(0, "MA"), ENGLISH(2, "EN"), BIOLOGY(5, "BIO"), CHEMISTRY(4, "CHE"), PHYSICS(3, "PHY"), COMPUTER_SCIENCE(10, "CS");
@@ -25,8 +28,9 @@ public enum BookType{
     }
     
     public static BookType of(String name){
+        
         for (BookType type : BookType.values()){
-            if (type.typeName.equalsIgnoreCase(name)) {
+            if (type.toString().equalsIgnoreCase(name)||type.typeName.equalsIgnoreCase(name)) {
                 return type;
             }
         }

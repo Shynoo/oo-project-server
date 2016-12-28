@@ -1,6 +1,5 @@
 package com.github.shynoo.service;
 
-
 import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookStatus;
 import com.github.shynoo.entity.result.Result;
@@ -24,13 +23,16 @@ public class UserServiceTest{
     @Autowired
     BookService bookService;
     
+    
     @Test
     public void userLogInTest(){
+        
         String id = "1";
         String password = "123";
         Result r = userService.checkPassword(id, password);
         User u = (User) r.get();
         Assert.assertEquals(u, userService.getUserById(id));
+
     }
     
     @Test

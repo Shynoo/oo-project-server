@@ -67,6 +67,8 @@ public class LocalBookDao implements BookDao{
     @Override
     public List<Book> searchBooksByName(String name){
         List list = new LinkedList();
+//        books.entrySet().stream().map(Map.Entry::getValue).map(Book::getName)
+//            .filter(Stream.of(name.split(" ")).));
         for (Book book : books.values()){
             for (String s2 : name.split(" ")){
                 if (book.getName().contains(s2)) {
