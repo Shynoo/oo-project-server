@@ -148,3 +148,8 @@ table tr td:last-child {
     white-space: nowrap;
     width: 1px;
 }
+
+button:disabled {
+    color: #999;
+    cursor: inherit;
+}

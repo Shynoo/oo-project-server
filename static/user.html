@@ -344,7 +344,7 @@
                     for (key in books) {
                         if (books.hasOwnProperty(key)) {
                             let book = books[key];
-                            tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseBookType(book['bookType']) + '</td><td>' + parseStatus(book['bookStatus']) + '</td><td><button class="lb-btn" onclick="deleteBook(\'' + book['bookId'] + '\');">Delete</button></td></tr>');
+                            tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseBookType(book['bookType']) + '</td><td>' + parseStatus(book['bookStatus']) + '</td><td><button class="lb-btn" onclick="deleteBook(\'' + book['bookId'] + '\');" ' + isDisabled(book['bookStatus']) + '>Delete</button></td></tr>');
                         }
                     }
                     if (books.length == 0) {
@@ -357,6 +357,22 @@
             });
         }
 
+        function deleteBook(id) {
+            $.ajax({
+                method: 'GET',
+                url: 'deleteBook/' + id,
+                timeout: 100000,
+                success: function (result) {
+                    console.log('delete book ' + id + ': ', result);
+                    getAllBooks();
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        // Util Functions
         function parseDate(localDate) {
             return localDate['year'] + '-' + localDate['monthValue'] + '-' + localDate['dayOfMonth'];
         }
@@ -387,6 +403,15 @@
                     return '<span style="color: #ea4335;">Checked out</span>';
                 default:
                     return '<span style="color: #34a853;">Available</span>';
+            }
+        }
+
+        function isDisabled(status) {
+            switch (status) {
+                case 'BORROWING_OUT':
+                    return 'disabled';
+                default:
+                    return '';
             }
         }
 

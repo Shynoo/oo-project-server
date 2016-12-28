@@ -103,6 +103,12 @@ public class SampleController {
                 .equals(ResultStatus.SUCCESS);
     }
 
+    @RequestMapping("deleteBook/{id}")
+    boolean deleteBook(@PathVariable String id) {
+        return userService.deleteBook(userService.getUserById("admin"), bookService.getBookById(id))
+                .equals(ResultStatus.SUCCESS);
+    }
+
     @RequestMapping("search")
     List<Book> search(@RequestParam String q) {
         List<Book> results = new ArrayList<>();
