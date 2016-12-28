@@ -4,7 +4,7 @@ public class Admin extends User{
     
     protected UserType userType = UserType.ADMIN;
     
-    public static UserBuilder createAdminUserBuilder(){
+    public static UserBuilder createAdminUser(){
         return factory.createAdminUser();
     }
     
