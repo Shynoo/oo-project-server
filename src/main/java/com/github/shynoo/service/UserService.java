@@ -67,10 +67,13 @@ public class UserService{
     
     public ResultStatus addUser(User user, User newUser){
         if (user.getUserType().isAllowManageUsers()) {
+            if (getUserById(newUser.getId())!=null){
+                return ResultStatus.FAILURE;
+            }
             userDao.addUser(newUser);
             return ResultStatus.SUCCESS;
         }
-        return (ResultStatus.FAILURE);
+        return ResultStatus.FAILURE;
     }
     
     
@@ -116,6 +119,9 @@ public class UserService{
     
     public ResultStatus addBook(User user, Book book){
         if (user.getUserType().isAllowManageBooks()) {
+            if (bookDao.getBookById(book.getBookId())!=null){
+                return ResultStatus.FAILURE;
+            }
             bookDao.addBook(book);
             return ResultStatus.SUCCESS;
         }
