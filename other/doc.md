@@ -70,7 +70,7 @@
 
 
 在User类及其子类Admin中, 使用了抽象工厂的设计模式
-```
+```Java
 @Data
 public class User{
     
@@ -99,7 +99,7 @@ public class User{
 在这里使用抽象工厂方法主要是为了屏蔽UserBuilder类的userType(UserType type)方法.
 这样做可以屏蔽掉普通用户想要创建Admin用户的风险.
 
-```
+```Java
 public class UserBuilder{
     
     User user;
@@ -158,7 +158,7 @@ public class UserBuilder{
 
 ### 借书测试及活动图
 
-```
+```Java
 @Test
 public void borrowBookTest(){
     userService.borrowBook("1","CS121");
@@ -173,7 +173,7 @@ public void borrowBookTest(){
 
 ### 用户登录测试及活动图
 
-```
+```Java
 @Test
 public void userLogInTest(){
     String id = "1";
