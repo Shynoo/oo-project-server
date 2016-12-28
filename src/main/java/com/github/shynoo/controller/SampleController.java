@@ -110,6 +110,11 @@ public class SampleController {
                 .equals(ResultStatus.SUCCESS);
     }
 
+    @RequestMapping("changeUserType")
+    boolean changeUserType(@RequestParam String account, @RequestParam String userType) {
+        return true;
+    }
+
     @RequestMapping("search")
     List<Book> search(@RequestParam String q) {
         List<Book> results = new ArrayList<>();
