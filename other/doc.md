@@ -44,6 +44,8 @@
 
 ### 名词分析法
 
+对于上述每个用例
+
 ![classanalysis.1](imgs/classanalysis.1.png)
 
 ![classanalysis.2](imgs/classanalysis.2.png)
