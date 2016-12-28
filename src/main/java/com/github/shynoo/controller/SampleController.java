@@ -3,6 +3,7 @@ package com.github.shynoo.controller;
 import com.github.shynoo.entity.book.Book;
 import com.github.shynoo.entity.book.BookType;
 import com.github.shynoo.entity.result.ResultStatus;
+import com.github.shynoo.entity.user.Admin;
 import com.github.shynoo.entity.user.User;
 import com.github.shynoo.entity.user.UserType;
 import com.github.shynoo.service.BookService;
@@ -145,9 +146,24 @@ public class SampleController {
         return userService.giveBackBook(bookService.getBookById(bookId)).equals(ResultStatus.SUCCESS);
     }
 
+    @RequestMapping("addUser")
+    boolean addUsesr(@RequestParam String account, @RequestParam String userName, @RequestParam String password,
+            @RequestParam String userType) {
+        User user = null;
+        switch (userType) {
+        case "normal":
+            user = User.getFactory().createNormalUser().id(account).name(userName).password(password).build();
+        case "advanced":
+            user = User.getFactory().createAdvanceUser().id(account).name(userName).password(password).build();
+        case "admin":
+            user = Admin.newAdmin().id(account).name(userName).password(password).build();
+        }
+        return userService.addUser(userService.getUserById("admin"), user).equals(ResultStatus.SUCCESS);
+    }
+
     @RequestMapping("addBook")
-    boolean addBook(@RequestParam String account, @RequestParam String bookName, @RequestParam String bookType) {
-        return userService.addBook(userService.getUserById(account),
+    boolean addBook(@RequestParam String bookName, @RequestParam String bookType) {
+        return userService.addBook(userService.getUserById("admin"),
                 Book.newBook().name(bookName).type(BookType.of(bookType)).build()).equals(ResultStatus.SUCCESS);
     }
 

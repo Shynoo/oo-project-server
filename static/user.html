@@ -99,30 +99,30 @@
             <div class="panel-heading" data-toggle="collapse" data-target="#user-mgmt" style="cursor: pointer;">+ Add User</div>
             <div id="user-mgmt" class="panel-body collapse">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="User ID">
+                    <input id="new-user-id" class="form-control" type="text" placeholder="User ID (Account)">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="User Name">
+                    <input id="new-user-name" class="form-control" type="text" placeholder="User Name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" placeholder="Password">
+                    <input id="new-user-password" class="form-control" type="password" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Level (normal, advanced or admin)">
+                    <input id="new-user-type" class="form-control" type="text" placeholder="Level (normal, advanced or admin)">
                 </div>
-                <button class="btn blue" onclick="">Add</button>
+                <button class="btn blue" onclick="addUser();">Add</button>
             </div>
         </div>
         <div class="panel panel-default admin-only">
             <div class="panel-heading" data-toggle="collapse" data-target="#book-mgmt" style="cursor: pointer;">+ Add Book</div>
             <div id="book-mgmt" class="panel-body collapse">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Book Name">
+                    <input id="new-book-name" class="form-control" type="text" placeholder="Book Name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Type">
+                    <input id="new-book-type" class="form-control" type="text" placeholder="Type">
                 </div>
-                <button class="btn blue" onclick="">Add</button>
+                <button class="btn blue" onclick="addBook();">Add</button>
             </div>
         </div>
     </div>
@@ -370,6 +370,74 @@
                     console.log('ERROR: ', e);
                 }
             });
+        }
+
+        // Add User
+        function addUser() {
+            let id = $('#new-user-id').val();
+            let name = $('#new-user-name').val();
+            let password = $('#new-user-password').val();
+            let type = $('#new-user-type').val();
+
+            if (id && name && password && type) {
+                $.ajax({
+                    method: 'GET',
+                    url: 'addUser',
+                    timeout: 100000,
+                    data: {
+                        'account': id,
+                        'userName': name,
+                        'password': password,
+                        'userType': type
+                    },
+                    success: function (result) {
+                        console.log('add user ' + name + ': ', result);
+                        if (result) {
+                            getAllUsers();
+                            $('#new-user-id').val('');
+                            $('#new-user-name').val('');
+                            $('#new-user-password').val('');
+                            $('#new-user-type').val('');
+                        }
+                    },
+                    error: function (e) {
+                        console.log('ERROR: ', e);
+                    }
+                });
+            } else {
+                alert('required fields');
+            }
+        }
+
+        // Add Book
+        function addBook() {
+            let name = $('#new-book-name').val();
+            let type = $('#new-book-type').val();
+
+            if (name && type) {
+                $.ajax({
+                    method: 'GET',
+                    url: 'addBook',
+                    timeout: 100000,
+                    data: {
+                        'bookName': name,
+                        'bookType': type
+                    },
+                    success: function (result) {
+                        console.log('add book ' + name + ': ', result);
+                        if (result) {
+                            getAllBooks();
+                            $('#new-book-name').val('');
+                            $('#new-book-type').val('');
+                        }
+                    },
+                    error: function (e) {
+                        console.log('ERROR: ', e);
+                    }
+                });
+            } else {
+                alert('required fields');
+            }
         }
 
         // Util Functions
