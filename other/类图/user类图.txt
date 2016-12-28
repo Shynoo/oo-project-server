@@ -1,0 +1,52 @@
+@startuml
+
+package user <<cloud>>{
+    class User
+    class UserFactory
+    class UserBuilder
+    class UserType
+    class Admin
+}
+
+class User{
+    + boolean couldManageUser()
+    + boolean couldManageBook()
+    + User creatNormalUser()
+    + User creatAdvanceUser()
+}
+
+class UserFactory{
+    # UserBuilder creatNormalUser()
+    # UserBuilder creatAdvanceUser()
+    # UserBuilder creatAdminUser()
+}
+User *-- UserFactory
+
+class UserBuilder{
+    + UserBuilder id()
+    + UserBuilder name()
+    + UserBuilder type()
+    + UserBuilder password()
+    + User build()
+}
+UserFactory *-- UserBuilder
+User --* UserBuilder
+
+
+
+enum UserType{
+    NORMAL
+    ADVANCE
+    ADMIN
+    + UserType of()
+}
+User *-- UserType 
+
+class Admin{
+    + UserBuilder createAdminUser()
+}
+User <|-- Admin
+
+
+
+@endurl

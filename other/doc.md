@@ -18,7 +18,7 @@
 
 ## 实体类类图
 
-![实体类类图](./实体类图.png)
+![实体类类图](./类图/实体类图.png)
 
 ## 设计模式
 
@@ -41,6 +41,16 @@ public class UserBuilder{          User user;          UserBuilder(){ 
 ## 顺序图
 
 ## 完整类图
+
+
+### user 类图
+![user 类图](./类图/user类图.png)
+
+### book 类图
+![book 类图](./类图/book类图.png)
+
+### book 类图
+![web 类图](./类图/web类图.png)
 
 ## 项目实现
 
