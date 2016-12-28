@@ -1,0 +1,68 @@
+@startuml
+
+package user <<Cloud>> {
+    class User
+    class Admin
+    enum UserType
+
+}
+
+class User{
+    - String id
+    - String password
+    - String name
+    - UserType userType
+}
+class Admin{
+
+}
+enum UserType{
+    + NORMAL
+    + ADVANCE
+    + ADMIN
+    __
+    + int maxBorrowBooks
+    + int maxBorrowDays
+    - boolean couldManageUsers
+    - boolean couldManageBooks
+
+}
+
+User *-- UserType
+
+User <|-- Admin
+
+
+package book <<Cloud>> {
+    class Book
+    enum BookType
+    enum BookStatus
+
+}
+
+class Book{
+    - String id
+    - String name
+    - BookType bookType
+    - BookStatus bookStatus
+}
+enum BookType{
+    + MATH
+    + ENGLISH
+    + PHYSICS
+    + CHEMISREY
+    + BIOLOGY
+    + COMPUTER_SCIENCE
+    __
+    + long id
+    + String typeName
+}
+enum BookStatus{
+    + IN_LIBRARY
+    + BORROWED_OUT
+}
+
+Book *-- BookType
+Book *-- BookStatus
+@enduml
+

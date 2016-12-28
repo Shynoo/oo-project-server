@@ -1,0 +1,210 @@
+@startuml
+
+package controller <<Cloud>>{
+    class SampleController
+}
+
+class SampleController{
+    __
+    doLogin()
+    userProfile()
+    getBooks()
+    is Admin()
+    getAllUsers()
+    getAllBooks()
+    deleteUser()
+    deleteBook()
+    changeUserType()
+    search()
+    feelLucky()
+    borrrow()
+    giveBackBook()
+    addUser()
+    addBook()
+    checkPassword()
+}
+
+
+package service <<cloud>>{
+    class UserService
+    class BookService
+}
+class UserService{
+    + boolean checkUserPassword()
+    + User getUserById()
+    + int addUser()
+    + int deletUser()
+    + int borrowBook()
+    + int giveBackBook()
+    + changeUserType()
+    + boolean checkUserCouldBorrowBook()
+    + boolean checkBookCouldBorrowed()
+    + int addBook()
+    + int deleteBook()
+    + List<Book> getUserAllBorrowingBooks()
+    + Map getAllUsers()
+}
+SampleController *-- UserService
+
+class BookService{
+    List<Book> searchBookByName()
+    List<Book> searchBookByType()
+    Book getBookById()
+    List<Book> getAllBooks()
+}
+SampleController *-- BookService
+
+
+package dao <<cloud>>{
+    interface UserDao
+    class LocalUserDao
+    interface BookDao
+    interface BorrowingDao
+    class LocalBorrowingDao
+    class LocalBookDao
+}
+
+
+interface UserDao{
+    User getUserById()
+    String getUserPassword()
+    int addUser()
+    int deletUser()
+    int updateUser()
+    Map getAllUsers()
+}
+UserService -- UserDao 
+BookService -- UserDao
+class LocalUserDao{
+    __
+    ...
+}
+UserDao <|.. LocalUserDao
+
+interface BookDao{
+    Book getBookById()
+    List<Book> getBooksByName()
+    List<Book> searchBookByName()
+    List<Book> searchBookByType()
+    int addBook()
+    int deletBook()
+    int updateBook()
+}
+UserService -- BookDao 
+BookService -- BookDao
+
+class LocalBookDao{
+    __
+    ...
+}
+BookDao <|.. LocalBookDao
+
+interface BorrowingDao{
+    + int borrowOut()
+    + int giveBack()
+    + List<String> getUserAllBorrowedBooks()
+    + String getBookOwnerId();
+    + Date bookOutDay();
+}
+UserService -- BorrowingDao
+
+class LocalBorrowingDao{
+    __
+    ...
+}
+BorrowingDao <|.. LocalBorrowingDao
+
+
+package user <<cloud>>{
+    class User
+    class UserFactory
+    class UserBuilder
+    class UserType
+    class Admin
+}
+
+class User{
+    + boolean couldManageUser()
+    + boolean couldManageBook()
+    + User creatNormalUser()
+    + User creatAdvanceUser()
+}
+
+class UserFactory{
+    # UserBuilder creatNormalUser()
+    # UserBuilder creatAdvanceUser()
+}
+User *-- UserFactory
+
+class UserBuilder{
+    + UserBuilder id()
+    + UserBuilder name()
+    + UserBuilder type()
+    + UserBuilder password()
+    + User build()
+}
+UserFactory *-- UserBuilder
+User --* UserBuilder
+
+
+
+enum UserType{
+    NORMAL
+    ADVANCE
+    ADMIN
+    + UserType of()
+}
+User *-- UserType 
+
+class Admin{
+    + UserBuilder createAdminUser()
+}
+User <|-- Admin
+
+
+
+package book <<cloud>>{
+    class Book
+    class BookType
+    class BookStatus
+    class BookBuilder
+}
+
+class Book{
+    + BookBuilder newBook()
+    + (static) String generateBookId()
+}
+
+class BookBuilder{
+    + BookBuilder id()
+    + BookBuilder name()
+    + BookBuilder status()
+    + BookBuilder type()
+    + Book build()
+}
+
+Book -- BookBuilder
+
+
+enum BookType{
+    + MATH
+    + ENGLISH
+    + PHYSICS
+    + CHEMISREY
+    + BIOLOGY
+    + COMPUTER_SCIENCE
+    __
+    + long id
+    + String typeName
+    + BookType of()
+}
+
+enum BookStatus{
+    + IN_LIBRARY
+    + BORROWED_OUT
+}
+
+Book *-- BookStatus
+Book *-- BookType
+
+@endurl
