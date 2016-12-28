@@ -42,6 +42,28 @@
 
 ## 实体类类图
 
+### 名词分析法
+
+![classanalysis.1](imgs/classanalysis.1.png)
+
+![classanalysis.2](imgs/classanalysis.2.png)
+
+![classanalysis.3](imgs/classanalysis.3.png)
+
+![classanalysis.4](imgs/classanalysis.4.png)
+
+![classanalysis.5](imgs/classanalysis.5.png)
+
+![classanalysis.6](imgs/classanalysis.6.png)
+
+![classanalysis.7](imgs/classanalysis.7.png)
+
+![classanalysis.8](imgs/classanalysis.8.png)
+
+![classanalysis.9](imgs/classanalysis.9.png)
+
+### 仅带有属性的实体类类图
+
 ![实体类类图](./类图/实体类图.png)
 
 ## 设计模式
