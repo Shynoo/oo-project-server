@@ -1,0 +1,33 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor User as u
+participant "SampleController" as a
+participant "UserService" as b
+participant "BookService" as c
+
+database UserDao as d1
+
+
+u -> a : logIn(id,password)
+activate a
+a->b:checkPassword(id,password)
+
+activate b
+b->d1:getUserPassword(id)
+
+activate d1
+d1->b:password
+deactivate d1
+
+b->a:return
+deactivate b
+
+a->u:success
+deactivate a
+
+
+@enduml
