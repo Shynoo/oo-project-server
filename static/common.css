@@ -143,3 +143,8 @@ button.lb-btn {
     font-family: inherit;
     cursor: pointer;
 }
+
+table tr td:last-child {
+    white-space: nowrap;
+    width: 1px;
+}

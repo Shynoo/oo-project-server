@@ -42,21 +42,16 @@
             <div class="panel-body">
                 <table class="table table-striped">
                     <tr>
-                        <td>User Name</td>
+                        <th>User Name</th>
+                        <th>User Type</th>
+                        <th>Max number of books</th>
+                        <th>Max number of days</th>
+                    </tr>
+                    <tr>
                         <td id="user-name">Loading ...</td>
-                    </tr>
-                    <tr>
-                        <td>User Type</td>
                         <td id="user-type">Loading ...</td>
-                    </tr>
-                    <tr>
-                        <td>Max number of books</td>
                         <td id="max-books">Loading ...</td>
-                    </tr>
-                    <tr>
-                        <td>Max number of days</td>
-                        <td id="max-days">Loading ...</td>
-                    </tr>
+                        <td id="max-days" style="white-space: inherit; width: inherit;">Loading ...</td>
                 </table>
             </div>
         </div>
@@ -101,8 +96,8 @@
             </div>
         </div>
         <div class="panel panel-default admin-only">
-            <div class="panel-heading">Add User</div>
-            <div class="panel-body">
+            <div class="panel-heading" data-toggle="collapse" data-target="#user-mgmt" style="cursor: pointer;">+ Add User</div>
+            <div id="user-mgmt" class="panel-body collapse">
                 <div class="form-group">
                     <input class="form-control" type="text" placeholder="User ID">
                 </div>
@@ -119,8 +114,8 @@
             </div>
         </div>
         <div class="panel panel-default admin-only">
-            <div class="panel-heading">Add Book</div>
-            <div class="panel-body">
+            <div class="panel-heading" data-toggle="collapse" data-target="#book-mgmt" style="cursor: pointer;">+ Add Book</div>
+            <div id="book-mgmt" class="panel-body collapse">
                 <div class="form-group">
                     <input class="form-control" type="text" placeholder="Book Name">
                 </div>
@@ -195,6 +190,7 @@
             }
         }
 
+        // Account Information
         function getProfile() {
             $.ajax({
                 method: 'GET',
@@ -213,6 +209,7 @@
             });
         }
 
+        // My Books
         function getBooks() {
             $.ajax({
                 method: 'GET',
@@ -227,60 +224,6 @@
                     }
                     if (books.length == 0) {
                         tb_borrowedBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
-                    }
-                },
-                error: function (e) {
-                    console.log('ERROR: ', e);
-                }
-            });
-        }
-
-        function parseDate(localDate) {
-            return localDate['year'] + '-' + localDate['monthValue'] + '-' + localDate['dayOfMonth'];
-        }
-
-        function getAllUsers() {
-            $.ajax({
-                method: 'GET',
-                url: 'allUsers',
-                timeout: 100000,
-                success: function (users) {
-                    console.log('users: ', users);
-                    let tb_users = $('#users');
-                    tb_users.children('tbody').children().slice(1).remove();
-                    for (key in users) {
-                        if (users.hasOwnProperty(key)) {
-                            let user = users[key];
-                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn" onclick="upgrade(\'' + user['id'] + '\')">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="downgrade(\'' + user['id'] + '\')">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="deleteUser(\'' + user['id'] + '\')">Delete</button></td></tr>');
-                        }
-                    }
-                    if (users.length == 0) {
-                        tb_users.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
-                    }
-                },
-                error: function (e) {
-                    console.log('ERROR: ', e);
-                }
-            });
-        }
-
-        function getAllBooks() {
-            $.ajax({
-                method: 'GET',
-                url: 'allBooks',
-                timeout: 100000,
-                success: function (books) {
-                    console.log('all books: ', books);
-                    let tb_allBooks = $('#all-books');
-                    tb_allBooks.children('tbody').children().slice(1).remove();
-                    for (key in books) {
-                        if (books.hasOwnProperty(key)) {
-                            let book = books[key];
-                            tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseBookType(book['bookType']) + '</td><td>' + parseStatus(book['bookStatus']) + '</td><td><button class="lb-btn" onclick="deleteBook(\'' + book['bookId'] + '\');">Delete</button></td></tr>');
-                        }
-                    }
-                    if (books.length == 0) {
-                        tb_allBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
                     }
                 },
                 error: function (e) {
@@ -307,6 +250,117 @@
             });
         }
 
+        // User Mgmt
+        function getAllUsers() {
+            $.ajax({
+                method: 'GET',
+                url: 'allUsers',
+                timeout: 100000,
+                success: function (users) {
+                    console.log('users: ', users);
+                    let tb_users = $('#users');
+                    tb_users.children('tbody').children().slice(1).remove();
+                    for (key in users) {
+                        if (users.hasOwnProperty(key)) {
+                            let user = users[key];
+                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn" onclick="upgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="downgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="deleteUser(\'' + user['id'] + '\')">Delete</button></td></tr>');
+                        }
+                    }
+                    if (users.length == 0) {
+                        tb_users.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function upgrade(id, currentLevel) {
+            switch (currentLevel.toLowerCase()) {
+                case 'normal':
+                    changeUserType(id, 'advanced');
+                case 'advance':
+                    changeUserType(id, 'admin');
+                case 'admin':
+                    alert('cannot do this');
+            }
+        }
+
+        function downgrade(id, currentLevel) {
+            switch (currentLevel.toLowerCase()) {
+                case 'normal':
+                    alert('cannot do this');
+                case 'advance':
+                    changeUserType(id, 'normal');
+                case 'admin':
+                    changeUserType(id, 'advanced');
+            }
+        }
+
+        function changeUserType(id, type) {
+            $.ajax({
+                method: 'GET',
+                url: 'changeUserType',
+                timeout: 100000,
+                data: {
+                    'account': id,
+                    'userType': type
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function deleteUser(id) {
+            $.ajax({
+                method: 'GET',
+                url: 'deleteUser/' + id,
+                timeout: 100000,
+                success: function (result) {
+                    console.log('delete user ' + id + ': ' + result);
+                    getAllUsers();
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        // Book Mgmt
+        function getAllBooks() {
+            $.ajax({
+                method: 'GET',
+                url: 'allBooks',
+                timeout: 100000,
+                success: function (books) {
+                    console.log('all books: ', books);
+                    let tb_allBooks = $('#all-books');
+                    tb_allBooks.children('tbody').children().slice(1).remove();
+                    for (key in books) {
+                        if (books.hasOwnProperty(key)) {
+                            let book = books[key];
+                            tb_allBooks.append('<tr><td>' + book['bookId'] + '</td><td>' + book['name'] + '</td><td>' + parseBookType(book['bookType']) + '</td><td>' + parseStatus(book['bookStatus']) + '</td><td><button class="lb-btn" onclick="deleteBook(\'' + book['bookId'] + '\');">Delete</button></td></tr>');
+                        }
+                    }
+                    if (books.length == 0) {
+                        tb_allBooks.append('<tr><td colspan="4" align="center" style="color: #999;">Nothing more</td></tr>');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
+
+        function parseDate(localDate) {
+            return localDate['year'] + '-' + localDate['monthValue'] + '-' + localDate['dayOfMonth'];
+        }
+
         function parseUserType(type) {
             switch (type) {
                 case 'NORMAL':
@@ -330,7 +384,7 @@
         function parseStatus(status) {
             switch (status) {
                 case 'BORROWING_OUT':
-                    return '<span style="color: #ea4335;">On loan</span>';
+                    return '<span style="color: #ea4335;">Checked out</span>';
                 default:
                     return '<span style="color: #34a853;">Available</span>';
             }

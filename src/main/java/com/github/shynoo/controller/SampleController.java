@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 public class SampleController {
 
@@ -93,6 +95,12 @@ public class SampleController {
     @RequestMapping("allBooks")
     Map<String, Book> getAllBooks() {
         return bookService.getAllBooks();
+    }
+
+    @RequestMapping("deleteUser/{id}")
+    boolean deleteUser(@PathVariable String id) {
+        return userService.deletUser(userService.getUserById("admin"), userService.getUserById(id))
+                .equals(ResultStatus.SUCCESS);
     }
 
     @RequestMapping("search")
