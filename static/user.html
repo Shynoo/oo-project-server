@@ -22,6 +22,10 @@
         .admin-only {
             display: none;
         }
+        
+        body {
+            margin-bottom: 100px;
+        }
 
     </style>
 </head>
@@ -136,24 +140,7 @@
                 getProfile();
                 getBooks();
 
-                $.ajax({
-                    method: 'GET',
-                    url: 'isAdmin',
-                    timeout: 100000,
-                    data: {
-                        'account': $.account
-                    },
-                    success: function (isAdmin) {
-                        if (isAdmin) {
-                            $('.admin-only').css('display', 'inherit');
-                            getAllUsers();
-                            getAllBooks();
-                        }
-                    },
-                    error: function (e) {
-                        console.log('ERROR: ', e);
-                    }
-                });
+                checkIsAdmin();
             }
 
             // Events
@@ -166,6 +153,29 @@
                 }
             });
         });
+
+        function checkIsAdmin() {
+            $.ajax({
+                method: 'GET',
+                url: 'isAdmin',
+                timeout: 100000,
+                data: {
+                    'account': $.account
+                },
+                success: function (isAdmin) {
+                    if (isAdmin) {
+                        $('.admin-only').css('display', 'inherit');
+                        getAllUsers();
+                        getAllBooks();
+                    } else {
+                        $('.admin-only').addClass('disabled');
+                    }
+                },
+                error: function (e) {
+                    console.log('ERROR: ', e);
+                }
+            });
+        }
 
         function detectCookies() {
             // Cookies
@@ -242,7 +252,8 @@
                 timeout: 100000,
                 success: function (result) {
                     console.log('return book result: ', result);
-                    getBooks()
+                    getBooks();
+                    getAllBooks();
                 },
                 error: function (e) {
                     console.log('ERROR: ', e);
@@ -257,7 +268,7 @@
                 url: 'allUsers',
                 timeout: 100000,
                 success: function (users) {
-                    console.log('users: ', users);
+                    console.log('all users: ', users);
                     let tb_users = $('#users');
                     tb_users.children('tbody').children().slice(1).remove();
                     for (key in users) {
@@ -280,10 +291,13 @@
             switch (currentLevel.toLowerCase()) {
                 case 'normal':
                     changeUserType(id, 'advanced');
+                    break;
                 case 'advance':
                     changeUserType(id, 'admin');
+                    break;
                 case 'admin':
                     alert('cannot do this');
+                    break;
             }
         }
 
@@ -291,10 +305,13 @@
             switch (currentLevel.toLowerCase()) {
                 case 'normal':
                     alert('cannot do this');
+                    break;
                 case 'advance':
                     changeUserType(id, 'normal');
+                    break;
                 case 'admin':
                     changeUserType(id, 'advanced');
+                    break;
             }
         }
 
@@ -308,7 +325,12 @@
                     'userType': type
                 },
                 success: function (result) {
-                    console.log(result);
+                    console.log('changeUserType:', result);
+                    if (result) {
+                        getProfile();
+                        getAllUsers();
+                        checkIsAdmin();
+                    }
                 },
                 error: function (e) {
                     console.log('ERROR: ', e);
