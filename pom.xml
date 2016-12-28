@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.github.shynoo</groupId>
+    <artifactId>ooadproject</artifactId>
+    <version>0.1.0-RELEASE</version>
     <packaging>jar</packaging>
 
 

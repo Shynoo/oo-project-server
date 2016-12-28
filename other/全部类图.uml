@@ -6,8 +6,22 @@ package controller <<Cloud>>{
 
 class SampleController{
     __
-    controllerMethod
-    ...
+    doLogin()
+    userProfile()
+    getBooks()
+    is Admin()
+    getAllUsers()
+    getAllBooks()
+    deleteUser()
+    deleteBook()
+    changeUserType()
+    search()
+    feelLucky()
+    borrrow()
+    giveBackBook()
+    addUser()
+    addBook()
+    checkPassword()
 }
 
 
@@ -22,11 +36,13 @@ class UserService{
     + int deletUser()
     + int borrowBook()
     + int giveBackBook()
+    + changeUserType()
+    + boolean checkUserCouldBorrowBook()
+    + boolean checkBookCouldBorrowed()
     + int addBook()
     + int deleteBook()
     + List<Book> getUserAllBorrowingBooks()
     + Map getAllUsers()
-
 }
 SampleController *-- UserService
 
@@ -34,6 +50,7 @@ class BookService{
     List<Book> searchBookByName()
     List<Book> searchBookByType()
     Book getBookById()
+    List<Book> getAllBooks()
 }
 SampleController *-- BookService
 
@@ -54,6 +71,7 @@ interface UserDao{
     int addUser()
     int deletUser()
     int updateUser()
+    Map getAllUsers()
 }
 UserService -- UserDao 
 BookService -- UserDao
@@ -85,7 +103,7 @@ interface BorrowingDao{
     + int borrowOut()
     + int giveBack()
     + List<String> getUserAllBorrowedBooks()
-    + String getBookOwner();
+    + String getBookOwnerId();
     + Date bookOutDay();
 }
 UserService -- BorrowingDao
@@ -113,25 +131,33 @@ class User{
 }
 
 class UserFactory{
-    # User creatNormalUser()
-    # User creatAdvanceUser()
+    # UserBuilder creatNormalUser()
+    # UserBuilder creatAdvanceUser()
 }
 User *-- UserFactory
 
 class UserBuilder{
-    
+    + UserBuilder id()
+    + UserBuilder name()
+    + UserBuilder type()
+    + UserBuilder password()
+    + User build()
 }
 UserFactory *-- UserBuilder
+User --* UserBuilder
+
+
 
 enum UserType{
-    Normal
-    Advance
-    Admin
+    NORMAL
+    ADVANCE
+    ADMIN
+    + UserType of()
 }
 User *-- UserType 
 
 class Admin{
-    + User createAdminUser()
+    + UserBuilder createAdminUser()
 }
 User <|-- Admin
 
@@ -150,10 +176,14 @@ class Book{
 }
 
 class BookBuilder{
-
+    + BookBuilder id()
+    + BookBuilder name()
+    + BookBuilder status()
+    + BookBuilder type()
+    + Book build()
 }
 
-Book o-- BookBuilder
+Book -- BookBuilder
 
 
 enum BookType{
@@ -166,6 +196,7 @@ enum BookType{
     __
     + long id
     + String typeName
+    + BookType of()
 }
 
 enum BookStatus{
