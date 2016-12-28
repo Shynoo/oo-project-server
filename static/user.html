@@ -274,7 +274,7 @@
                     for (key in users) {
                         if (users.hasOwnProperty(key)) {
                             let user = users[key];
-                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn" onclick="upgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="downgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="deleteUser(\'' + user['id'] + '\')">Delete</button></td></tr>');
+                            tb_users.append('<tr><td>' + user['id'] + '</td><td>' + user['name'] + '</td><td>' + parseUserType(user['userType']) + '</td><td><button class="lb-btn" onclick="upgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Upgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="downgrade(\'' + user['id'] + '\', \'' + user['userType'] + '\')">Downgrade</button>&nbsp;&nbsp;<button class="lb-btn" onclick="deleteUser(\'' + user['id'] + '\')"' + isHimself(user['id']) + '>Delete</button></td></tr>');
                         }
                     }
                     if (users.length == 0) {
@@ -502,6 +502,12 @@
                     return 'disabled';
                 default:
                     return '';
+            }
+        }
+
+        function isHimself(id) {
+            if ($.account === id) {
+                return 'disabled';
             }
         }
 

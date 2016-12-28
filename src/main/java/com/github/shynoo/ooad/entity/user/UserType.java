@@ -45,10 +45,10 @@ public enum UserType{
     }
     
     public static UserType of(String s) {
-        UserType ms= UserType.valueOf(s);
-        if (ms!=null){
-            return ms;
-        }
+        // UserType ms= UserType.valueOf(s);
+        // if (ms!=null){
+        //     return ms;
+        // }
         for (UserType userType: UserType.values()){
             if (userType.type.equalsIgnoreCase(s)){
                 return userType;
