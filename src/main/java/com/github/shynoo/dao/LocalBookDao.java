@@ -18,6 +18,8 @@ public class LocalBookDao implements BookDao{
     
     private Map<String, List<Book>> nameToBook;
     
+    
+    
     public LocalBookDao(){
         books = new ConcurrentHashMap<>();
         nameToBook = new ConcurrentHashMap<>();

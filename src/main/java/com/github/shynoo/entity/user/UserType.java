@@ -36,7 +36,7 @@ public enum UserType{
         ADMIN.isAllowManageUsers = true;
     }
     
-    public boolean isAllowAddBooks(){
+    public boolean isAllowManageBooks(){
         return isAllowAddBooks;
     }
     
@@ -44,6 +44,19 @@ public enum UserType{
         return isAllowManageUsers;
     }
 
+    public UserType of(String s){
+        UserType ms= UserType.valueOf(s);
+        if (ms!=null){
+            return ms;
+        }
+        for (UserType userType:UserType.values()){
+            if (userType.type.equals(s)){
+                return userType;
+            }
+        }
+        return null;
+    }
+    
     @Override
     public String toString() {
         return this.type;

@@ -18,4 +18,6 @@ public interface UserDao{
     void initData();
     
     Map<String,User> getAllUsers();
+    
+    int updateUser(String id,User user);
 }

@@ -17,13 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.websocket.server.PathParam;
+import java.util.*;
 
 @RestController
 public class SampleController {
@@ -112,6 +106,7 @@ public class SampleController {
 
     @RequestMapping("changeUserType")
     boolean changeUserType(@RequestParam String account, @RequestParam String userType) {
+        
         return true;
     }
 
@@ -157,11 +152,11 @@ public class SampleController {
         User user = null;
         switch (userType) {
         case "normal":
-            user = User.getFactory().createNormalUser().id(account).name(userName).password(password).build();
+            user = User.createNormalUserBuilder().id(account).name(userName).password(password).build();
         case "advanced":
-            user = User.getFactory().createAdvanceUser().id(account).name(userName).password(password).build();
+            user = User.createAdvanceUserBuilder().id(account).name(userName).password(password).build();
         case "admin":
-            user = Admin.newAdmin().id(account).name(userName).password(password).build();
+            user = Admin.createAdminUserBuilder().id(account).name(userName).password(password).build();
         }
         return userService.addUser(userService.getUserById("admin"), user).equals(ResultStatus.SUCCESS);
     }

@@ -20,8 +20,17 @@ public class User{
         return factory;
     }
     
+    public static UserBuilder createNormalUserBuilder(){
+        return factory.createNormalUser();
+    }
+    
+    public static UserBuilder createAdvanceUserBuilder(){
+        return factory.createAdvanceUser();
+    }
+    
+    
     public boolean couldManageBook(){
-        return userType.isAllowAddBooks();
+        return userType.isAllowManageBooks();
     }
     
     public boolean couldManageUser(){

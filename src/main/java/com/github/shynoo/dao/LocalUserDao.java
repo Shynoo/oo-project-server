@@ -53,6 +53,13 @@ public class LocalUserDao implements UserDao{
         return map;
     }
     
+    @Override
+    public int updateUser(String id, User user){
+//        users.remove(id);
+//        users.put(id,user);
+        return 0;
+    }
+    
     
     @Override
     public String getUserPassword(String id){

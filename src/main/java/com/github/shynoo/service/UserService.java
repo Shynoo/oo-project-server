@@ -8,6 +8,7 @@ import com.github.shynoo.entity.book.BookStatus;
 import com.github.shynoo.entity.result.Result;
 import com.github.shynoo.entity.result.ResultStatus;
 import com.github.shynoo.entity.user.User;
+import com.github.shynoo.entity.user.UserType;
 import com.github.shynoo.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,7 +115,7 @@ public class UserService{
     
     
     public ResultStatus addBook(User user, Book book){
-        if (user.getUserType().isAllowAddBooks()) {
+        if (user.getUserType().isAllowManageBooks()) {
             bookDao.addBook(book);
             return ResultStatus.SUCCESS;
         }
@@ -123,13 +124,18 @@ public class UserService{
     
     
     public ResultStatus deleteBook(User user, Book book){
-        if (user.getUserType().isAllowAddBooks()) {
+        if (user.getUserType().isAllowManageBooks()) {
             bookDao.deleteBook(book);
             return ResultStatus.SUCCESS;
         }
         return ResultStatus.UNKNOWN_RESULT;
     }
     
+    
+    public void changeUserType(User user, UserType userType){
+        user.setUserType(userType);
+        userDao.updateUser(user.getId(),user);
+    }
     
     public boolean checkUserCouldBorrowBook(User user){
         List<String> ls=borrowingDao.getUserAllBorrowedBooks(user.getId());
