@@ -32,7 +32,7 @@ public class UserServiceTest{
         Result r = userService.checkPassword(id, password);
         User u = (User) r.get();
         Assert.assertEquals(u, userService.getUserById(id));
-
+        
     }
     
     @Test

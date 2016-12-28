@@ -1,5 +1,11 @@
 @startuml
 
+package user <<Cloud>> {
+    class User
+    class Admin
+    enum UserType
+
+}
 
 class User{
     - String id
@@ -11,9 +17,9 @@ class Admin{
 
 }
 enum UserType{
-    + Normal
-    + Advance
-    + Admin
+    + NORMAL
+    + ADVANCE
+    + ADMIN
     __
     + int maxBorrowBooks
     + int maxBorrowDays
@@ -26,6 +32,14 @@ User *-- UserType
 
 User <|-- Admin
 
+
+package book <<Cloud>> {
+    class Book
+    enum BookType
+    enum BookStatus
+
+}
+
 class Book{
     - String id
     - String name
@@ -33,18 +47,19 @@ class Book{
     - BookStatus bookStatus
 }
 enum BookType{
-    + Math
-    + English
-    + Physics
-    + Chemistry
-    + Biology
-    + Computer Science
+    + MATH
+    + ENGLISH
+    + PHYSICS
+    + CHEMISREY
+    + BIOLOGY
+    + COMPUTER_SCIENCE
     __
     + long id
     + String typeName
 }
-class BookStatus{
-
+enum BookStatus{
+    + IN_LIBRARY
+    + BORROWED_OUT
 }
 
 Book *-- BookType
