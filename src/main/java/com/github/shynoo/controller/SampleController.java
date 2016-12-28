@@ -106,7 +106,7 @@ public class SampleController {
 
     @RequestMapping("changeUserType")
     boolean changeUserType(@RequestParam String account, @RequestParam String userType) {
-        
+        userService.changeUserType(userService.getUserById(account), UserType.valueOf(userType));
         return true;
     }
 
