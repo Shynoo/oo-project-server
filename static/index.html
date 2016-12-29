@@ -114,7 +114,7 @@
             console.log(data);
             animate();
             $('#results div').remove('.book-result');
-            $('#results div').remove('#no-result');
+            $('#results p').remove('#no-result');
             for (book of data) {
                 $('#results').append('<div class="book-result"><p class="book-name">' + book['name'] + '</p><p>Book ID: ' + book['bookId'] + '</p><p>Type: ' + parseBookType(book['bookType']) + '</p><p>Status: <span id="' + book['bookId'] + '-status">' + parseStatus(book['bookStatus']) + '</p><p><button class="lb-btn" onclick="borrow(\'' + book['bookId'] + '\')" ' + canCheckOut(book['bookStatus']) + '>Check out</button></p></div>');
             }
