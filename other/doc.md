@@ -7,9 +7,8 @@
 | 学号 | 姓名 | 分工 |
 | -------- | ---- | ---- |
 | ... | ... | ...  |
-| 11310057 | 张宇 | 前端页面实现、后端controller实现 |
+| 11310057 | 张宇 | 前端代码实现、后端 Controller 实现 |
 | 11310388 | 邓收港 | 后端代码实现、部分顺序图实现、单元测试及其活动图 |
-|  |  |
 
 ## 目录
 
@@ -108,8 +107,8 @@
 
 ## 设计模式
 
+在 `User` 类及其子类 `Admin` 中, 使用了抽象工厂的设计模式
 
-在User类及其子类Admin中, 使用了抽象工厂的设计模式
 ```Java
 @Data
 public class User{
@@ -147,8 +146,8 @@ public class Admin extends User{
 }
 ```
 
-在这里使用抽象工厂方法主要是为了屏蔽UserBuilder类的userType(UserType type)方法.
-这样做可以屏蔽掉普通用户想要创建Admin用户的风险.
+在这里使用抽象工厂方法主要是为了屏蔽 `UserBuilder` 类的 `userType(UserType type)` 方法.
+这样做可以屏蔽掉普通用户想要创建 `Admin` 用户的风险.
 
 ```Java
 public class UserBuilder{
@@ -189,28 +188,28 @@ public class UserBuilder{
 ## 顺序图
 
 ### 登录
+
 ![](顺序图/login.png)
 
 ### 查看个人信息
+
 ![](./顺序图/getUser.png)
 
-
 ### 查看已借阅图书
+
 ![](顺序图/getAllBorrowingBooks.png)
 
-
 ### 检查是否为Admin
+
 ![](顺序图/isAdmin.png)
 
-
 ### 所有用户列表
+
 ![](./顺序图/getAllUsers.png)
 
-
-
 ### 所有图书列表
-![](./顺序图/getAllBooks.png)
 
+![](./顺序图/getAllBooks.png)
 
 ### 增加图书
 
@@ -221,11 +220,12 @@ public class UserBuilder{
 ![](顺序图/deleteBook.png)
 
 ### 增加用户
+
 ![](顺序图/addUser.png)
 
 ### 删除用户
-![](顺序图/deleteUser.png)
 
+![](顺序图/deleteUser.png)
 
 ### 改变用户的类型
 
@@ -249,19 +249,21 @@ public class UserBuilder{
 
 ## 完整类图
 
-### user 类图
+### user 包类图
+
 ![user 类图](./类图/user类图.png)
 
-### book 类图
+### book 包类图
+
 ![book 类图](./类图/book类图.png)
 
-### book 类图
+### web 包类图
+
 ![web 类图](./类图/web类图.png)
 
 ## 项目实现
 
-详见 [github项目地址](https://github.com/Shynoo/oo-project-server/tree/frontend)
-
+详见 [GitHub 项目地址](https://github.com/Shynoo/oo-project-server/tree/frontend)
 
 ## 测试
 
@@ -299,11 +301,13 @@ public void userLogInTest(){
 ## 可扩展性分析
 
 ### 加入修改图书信息的功能
-功能描述: 管理员可以修改图书的信息, 如图书name, type等.
+
+功能描述: 管理员可以修改图书的信息, 如图书 name, type 等.
 
 ### 解决方案
-1. 页面提供一个功能的入口, 让用户提交图书id和图书的新信息. 
-2. controller收到信息后调用userService检查用户是否有修改图书信息的权限.
-3. controller调用bookService的updateBookInfo(Book book)方法.
-4. bookService调用bookDao的updateBook(Book book)方法
+
+1. 页面提供一个功能的入口, 让用户提交图书 id 和图书的新信息. 
+2. `Controller` 收到信息后调用 `UserService` 检查用户是否有修改图书信息的权限.
+3. `Controller` 调用 `BookService` 的 `updateBookInfo(Book book)` 方法.
+4. `BookService` 调用 `BookDao` 的 `updateBook(Book book)` 方法
 5. 修改图书信息成功 
