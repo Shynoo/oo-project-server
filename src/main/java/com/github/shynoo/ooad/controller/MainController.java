@@ -113,7 +113,7 @@ public class MainController{
     @RequestMapping("search")
     public List<Book> search(@RequestParam String q) {
         if (!userService.isInited){
-            isInited.isInited=true;
+            userService.isInited=true;
             userService.initData();
         }
         List<Book> results = new ArrayList<>();
@@ -130,7 +130,7 @@ public class MainController{
     @RequestMapping("feelLucky")
     public List<Book> feelLucky() {
         if (!userService.isInited){
-            isInited.isInited=true;
+            userService.isInited=true;
             userService.initData();
         }
         List<Book> results = new ArrayList<>();
