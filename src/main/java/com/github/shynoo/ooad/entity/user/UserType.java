@@ -23,14 +23,14 @@ public enum UserType{
     }
     
     static{
-        NORMAL.maxBorrowingBookNumber = 10;
+        NORMAL.maxBorrowingBookNumber = 5;
         NORMAL.maxBorrowingDay = 15;
         
-        ADVANCE.maxBorrowingBookNumber = 20;
+        ADVANCE.maxBorrowingBookNumber = 10;
         ADVANCE.maxBorrowingDay = 30;
         
-        ADMIN.maxBorrowingBookNumber = 100;
-        ADMIN.maxBorrowingDay = 365;
+        ADMIN.maxBorrowingBookNumber = 20;
+        ADMIN.maxBorrowingDay = 60;
         
         ADMIN.isAllowAddBooks = true;
         ADMIN.isAllowManageUsers = true;
