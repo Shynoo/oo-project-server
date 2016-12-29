@@ -29,7 +29,7 @@ public class Book{
     
     public static String generateBookId(Book book){
 //        return (book.getBookType().typeName+book.hashCode()).substring(0, 16);
-        return book.getBookType().typeName+(""+new Random().nextInt(1<<10));
+        return book.getBookType().typeName+(String.valueOf(99+new Random().nextInt(1<<10)));
     }
     
     @Override

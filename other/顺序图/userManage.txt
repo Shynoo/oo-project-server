@@ -5,7 +5,7 @@ skinparam maxmessagesize 60
 skinparam sequenceParticipant underline
 
 actor User as u
-participant "SampleController" as a
+participant "MainController" as a
 participant "UserService" as b
 participant "BookService" as c
 
