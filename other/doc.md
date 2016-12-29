@@ -186,6 +186,7 @@ public class UserBuilder{
 ## 顺序图
 
 ### 登录
+ok
 
 ### 查看个人信息
 
@@ -202,8 +203,10 @@ public class UserBuilder{
 ### 删除图书
 
 ### 增加用户
+ok
 
 ### 删除用户
+ok
 
 ### 改变用户的类型
 
