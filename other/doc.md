@@ -189,8 +189,12 @@ public class UserBuilder{
 ok
 
 ### 查看个人信息
+deng
+
 
 ### 查看已借阅图书
+
+deng
 
 ### 检查是否为Admin
 
@@ -203,10 +207,10 @@ ok
 ### 删除图书
 
 ### 增加用户
-ok
+deng
 
 ### 删除用户
-ok
+deng
 
 ### 改变用户的类型
 
