@@ -114,12 +114,12 @@
             console.log(data);
             animate();
             $('#results div').remove('.book-result');
-            $('#results p').remove('#no-result');
+            $('#results div').remove('#no-result');
             for (book of data) {
                 $('#results').append('<div class="book-result"><p class="book-name">' + book['name'] + '</p><p>Book ID: ' + book['bookId'] + '</p><p>Type: ' + parseBookType(book['bookType']) + '</p><p>Status: <span id="' + book['bookId'] + '-status">' + parseStatus(book['bookStatus']) + '</p><p><button class="lb-btn" onclick="borrow(\'' + book['bookId'] + '\')" ' + canCheckOut(book['bookStatus']) + '>Check out</button></p></div>');
             }
             if (data.length == 0) {
-                $('#results').append('<p id="no-result">Your search did not match any documents.</p>Suggestions:<ul><li>Make sure all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li></ul>');
+                $('#results').append('<div id="no-result"><p id="no-result">Your search did not match any documents.</p>Suggestions:<ul><li>Make sure all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li></ul></div>');
             }
             setTimeout("$('#results').fadeIn(500)", 500);
         }
