@@ -208,7 +208,11 @@ deng
 
 ### 增加图书
 
+![](顺序图/addBook.png)
+
 ### 删除图书
+
+![](顺序图/deleteBook.png)
 
 ### 增加用户
 ![](顺序图/addUser.png)
