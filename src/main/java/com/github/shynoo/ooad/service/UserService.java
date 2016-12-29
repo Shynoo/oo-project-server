@@ -42,6 +42,10 @@ public class UserService{
     }
     
     public Result checkUserPassword(String id, String password){
+        if (!isInited){
+            initData();
+            isInited=true;
+        }
         String realPasswd = userDao.getUserPassword(id);
         if (password.equals(realPasswd)) {
             User user = userDao.getUserById(id);
@@ -164,8 +168,8 @@ public class UserService{
     
     public List<Book> getUserAllBorrowingBooks(String id){
         if (!isInited){
-            isInited=true;
             initData();
+            isInited=true;
         }
         List<String> ls=borrowingDao.getUserAllBorrowedBooks(id);
         if (ls==null){
