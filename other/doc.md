@@ -12,7 +12,7 @@
 | 11310116 | 孙佳明  | 设计模式                     |
 | 11310182 | 方致远  | 可扩展性分析                   |
 | 11310388 | 邓收港  | 后端代码实现，部分顺序图实现，单元测试及其活动图 |
-| 11410328 | 皮志成  | 用例图，用例分析文档               |
+| 11410328 | 皮志成  | 用例图，用例分析文档，顺序图            |
 
 ## 目录
 
@@ -193,15 +193,15 @@ public class UserBuilder{
 
 ### 登录
 
-![](顺序图/login.png)
+![](sequence-diagrams/login.png)
 
 ### 查看个人信息
 
-![](./顺序图/getUser.png)
+![](sequence-diagrams/getUserMessage.png)
 
 ### 查看已借阅图书
 
-![](顺序图/getAllBorrowingBooks.png)
+![](sequence-diagrams/getBorrowingBooks.png)
 
 ### 检查是否为 Admin
 
@@ -217,23 +217,23 @@ public class UserBuilder{
 
 ### 增加图书
 
-![](顺序图/addBook.png)
+![](sequence-diagrams/addBook.png)
 
 ### 删除图书
 
-![](顺序图/deleteBook.png)
+![](sequence-diagrams/deleteBook.png)
 
 ### 增加用户
 
-![](顺序图/addUser.png)
+![](sequence-diagrams/addUser.png)
 
 ### 删除用户
 
-![](顺序图/deleteUser.png)
+![](sequence-diagrams/deleteUser.png)
 
 ### 改变用户的类型
 
-![](顺序图/changeUserType.png)
+![](sequence-diagrams/changeUserType.png)
 
 ### feelLucky
 
@@ -241,15 +241,15 @@ public class UserBuilder{
 
 ### 查找图书
 
-![](顺序图/searchBook.png)
+![](sequence-diagrams/searchBook.png)
 
 ### 借阅图书
 
-![](顺序图/borrowBook.png)
+![](sequence-diagrams/borrow.png)
 
 ### 归还图书
 
-![](顺序图/returnBook.png)
+![](sequence-diagrams/returnBook.png)
 
 ## 完整类图
 
