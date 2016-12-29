@@ -1,0 +1,49 @@
+@startuml
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+	ArrowColor DeepSkyBlue
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor blue
+	LifeLineBackgroundColor #A9DCDF
+	
+	ParticipantBorderColor DeepSkyBlue
+	ParticipantBackgroundColor DodgerBlue
+	ParticipantFontName Impact
+	ParticipantFontSize 17
+	ParticipantFontColor #A9DCDF
+	
+	ActorBackgroundColor aqua
+	ActorFontColor DeepSkyBlue
+	ActorFontSize 17
+	ActorFontName Aapex
+}
+
+actor User as u
+participant "MainController" as a
+participant "UserService" as b
+
+database UserDao as d1
+
+
+u -> a : getAllUsers()
+activate a
+a->b:getAllUsers()
+activate b
+
+b->d1:getAllUsers()
+activate d1
+d1-->b:Map<id,User>
+deactivate d1
+
+b-->a: Map<id,User>
+deactivate b
+
+
+a-->u:Map<id,User>
+deactivate a
+
+
+@enduml

@@ -197,7 +197,7 @@ deng
 
 
 ### 检查是否为Admin
-![](./顺序图/isAdmin.png)
+![](顺序图/isAdmin.png)
 
 
 ### 所有用户列表
