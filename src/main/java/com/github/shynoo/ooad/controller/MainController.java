@@ -161,10 +161,13 @@ public class MainController{
         switch (userType) {
         case "normal":
             user = User.createNormalUser().id(account).name(userName).password(password).build();
+            break;
         case "advanced":
             user = User.createAdvanceUser().id(account).name(userName).password(password).build();
+            break;
         case "admin":
             user = Admin.createAdminUser().id(account).name(userName).password(password).build();
+            break;
         }
         return userService.addUser(userService.getUserById("admin"), user).equals(ResultStatus.SUCCESS);
     }
