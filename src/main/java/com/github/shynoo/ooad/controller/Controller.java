@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 @RestController
-public class SampleController {
+public class Controller {
 
     @Autowired
     private UserService userService;
