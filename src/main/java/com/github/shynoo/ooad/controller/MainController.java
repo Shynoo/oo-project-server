@@ -112,6 +112,10 @@ public class MainController{
 
     @RequestMapping("search")
     public List<Book> search(@RequestParam String q) {
+        if (!userService.isInited){
+            isInited.isInited=true;
+            userService.initData();
+        }
         List<Book> results = new ArrayList<>();
         if (q.startsWith("type:")) {
             results.addAll(bookService.searchBookByType(BookType.of(q.substring(5).trim())));
@@ -125,6 +129,10 @@ public class MainController{
 
     @RequestMapping("feelLucky")
     public List<Book> feelLucky() {
+        if (!userService.isInited){
+            isInited.isInited=true;
+            userService.initData();
+        }
         List<Book> results = new ArrayList<>();
         int num = new Random().nextInt(2) + 2;
         for (int i = 0; i < num; i++) {
