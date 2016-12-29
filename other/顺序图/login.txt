@@ -19,13 +19,13 @@ activate b
 b->d1:getUserPassword(id)
 
 activate d1
-d1->b:password
+d1-->b:password
 deactivate d1
 
-b->a:return
+b-->a: return true or false
 deactivate b
 
-a->u:return
+a-->u:return
 deactivate a
 
 

@@ -66,7 +66,7 @@ public class UserService{
     
     
     public ResultStatus addUser(User user, User newUser){
-        if (user.getUserType().isAllowManageUsers()) {
+        if (user.couldManageUser()) {
             if (getUserById(newUser.getId())!=null){
                 return ResultStatus.FAILURE;
             }
@@ -79,7 +79,7 @@ public class UserService{
     
     public ResultStatus deletUser(User user, User delUser){
         try{
-            if (user.getUserType().isAllowManageUsers()) {
+            if (user.couldManageUser()) {
                 userDao.deleteUser(delUser);
                 return ResultStatus.SUCCESS;
             }
@@ -119,7 +119,7 @@ public class UserService{
     
     
     public ResultStatus addBook(User user, Book book){
-        if (user.getUserType().isAllowManageBooks()) {
+        if (user.couldManageBook()) {
             if (bookDao.getBookById(book.getBookId())!=null){
                 return ResultStatus.FAILURE;
             }
@@ -131,7 +131,7 @@ public class UserService{
     
     
     public ResultStatus deleteBook(User user, Book book){
-        if (user.getUserType().isAllowManageBooks()) {
+        if (user.couldManageBook()) {
             bookDao.deleteBook(book);
             return ResultStatus.SUCCESS;
         }

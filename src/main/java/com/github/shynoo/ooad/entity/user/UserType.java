@@ -36,11 +36,11 @@ public enum UserType{
         ADMIN.isAllowManageUsers = true;
     }
     
-    public boolean isAllowManageBooks(){
+    boolean isAllowManageBooks(){
         return isAllowAddBooks;
     }
     
-    public boolean isAllowManageUsers(){
+    boolean isAllowManageUsers(){
         return isAllowManageUsers;
     }
     
