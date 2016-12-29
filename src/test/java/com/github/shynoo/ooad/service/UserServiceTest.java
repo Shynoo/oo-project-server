@@ -1,6 +1,6 @@
 package com.github.shynoo.ooad.service;
 
-import com.github.shynoo.ooad.controller.SampleController;
+import com.github.shynoo.ooad.controller.MainController;
 import com.github.shynoo.ooad.entity.book.Book;
 import com.github.shynoo.ooad.entity.book.BookStatus;
 import com.github.shynoo.ooad.entity.result.Result;
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceTest{
     
     @Autowired
-    SampleController sampleController;
+    MainController mainController;
     
     @Autowired
     UserService userService;

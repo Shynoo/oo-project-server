@@ -33,7 +33,7 @@ public class UserService{
         
     }
     
-    protected void initData(){
+    public void initData(){
         borrowBook("foo",bookDao.getRandomUnborrowedBook().getBookId());
         borrowBook("foo",bookDao.getRandomUnborrowedBook().getBookId());
         borrowBook("11310057",bookDao.getRandomUnborrowedBook().getBookId());
@@ -51,7 +51,7 @@ public class UserService{
         
     }
     
-    boolean isInited=false;
+    public boolean isInited=false;
     
     
     public User getUserById(String id){
