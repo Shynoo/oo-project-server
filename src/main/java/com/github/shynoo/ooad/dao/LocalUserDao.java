@@ -33,11 +33,33 @@ public class LocalUserDao implements UserDao{
         user = User.createNormalUser().id("11310388")
             .name("邓收港").password("123").build();
         addUser(user);
-        
+    
         user = User.createNormalUser().id("11310057")
             .name("张宇").password("123").build();
         addUser(user);
-        
+    
+        user = User.createNormalUser().id("11410328")
+            .name("皮志成").password("123").build();
+        addUser(user);
+    
+        user = User.createNormalUser().id("11310082")
+            .name("欧泽彬").password("123").build();
+        addUser(user);
+    
+        user = User.createNormalUser().id("11310073")
+            .name("张凌祺").password("123").build();
+        addUser(user);
+    
+        user = User.createNormalUser().id("11310182")
+            .name("方致远").password("123").build();
+        addUser(user);
+    
+        user = User.createNormalUser().id("11310116")
+            .name("孙佳明").password("123").build();
+        addUser(user);
+    
+    
+    
         user = Admin.createAdminUser().id("admin")
             .name("Administrator").password("123").build();
         addUser(user);

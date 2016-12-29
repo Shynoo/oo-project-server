@@ -42,7 +42,12 @@ public class LocalBookDao implements BookDao{
         book = Book.newBook().name("活着的细胞").type(BookType.BIOLOGY).build();addBook(book);
         book = Book.newBook().name("量子力学").type(BookType.PHYSICS).build();addBook(book);
         book = Book.newBook().name("高等数学基础").type(BookType.MATH).build();addBook(book);
-        
+        book = Book.newBook().name("线性代数").type(BookType.MATH).build();addBook(book);
+        book = Book.newBook().name("面向对象设计方法").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book = Book.newBook().name("软件开发方法").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book = Book.newBook().name("软件工程基础").type(BookType.COMPUTER_SCIENCE).build();addBook(book);
+        book = Book.newBook().name("敏捷开发设计").type(BookType.MATH).build();addBook(book);
+    
     }
     
     @Override
