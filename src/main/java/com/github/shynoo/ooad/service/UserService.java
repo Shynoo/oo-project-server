@@ -98,6 +98,7 @@ public class UserService{
         book.setBorrowedDate(LocalDate.now());
         return ResultStatus.SUCCESS;
     }
+    
     public ResultStatus borrowBook(String user,String book){
         return borrowBook(userDao.getUserById(user),bookDao.getBookById(book));
     }
