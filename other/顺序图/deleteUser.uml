@@ -1,0 +1,40 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor Admin as u
+participant "MainController" as a
+participant "UserService" as b
+
+entity User as ad
+
+database UserDao as d1
+
+
+u -> a : delete(user,delUser)
+activate a
+a->b:deleteUser(user,delUser)
+
+activate b
+
+b->ad:user.couldManagerUser()
+
+activate ad
+ad-->b: true
+deactivate ad
+
+
+b->d1:deleteUer(delUser)
+
+
+b->a:success
+deactivate b
+
+
+a->u:success
+deactivate a
+
+
+@enduml
