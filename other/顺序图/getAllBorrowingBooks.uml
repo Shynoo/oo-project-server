@@ -1,0 +1,33 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor Admin as u
+participant "MainController" as a
+participant "UserService" as b
+
+database BorrowingDao as d2
+
+u -> a : getUserAllBorrowingBooks(userid)
+activate a
+a->b:getUserAllBorrowingBooks(userId)
+activate b
+
+b->d2:getUserAllBorrowingBoosk(id)
+
+activate d2
+
+d2-->b: List<Book>
+deactivate d2
+
+b->a:List<Book>
+deactivate b
+
+
+a->u:List<Book>
+deactivate a
+
+
+@enduml

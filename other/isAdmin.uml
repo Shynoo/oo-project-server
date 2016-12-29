@@ -1,0 +1,40 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor Admin as u
+participant "MainController" as a
+participant "UserService" as b
+participant "BookService" as c
+
+entity User as ad
+
+database UserDao as d1
+
+u -> a : isAdmin(userId)
+activate a
+a->b:getUserById(userId)
+activate b
+
+b->d1:getUserById(userId)
+activate d1
+d1-->b:user
+deactivate d1
+
+b-->a: user
+deactivate b
+
+a->ad : user.getUserType()
+activate ad
+ad-->a : userType
+deactivate ad
+
+a->a: userType.equals(UserType.ADMIN)
+
+a-->u:true or false
+deactivate a
+
+
+@enduml
