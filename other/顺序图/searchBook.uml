@@ -1,0 +1,31 @@
+@startuml
+
+skinparam sequenceParticipant underline
+!include style.ptmono.iuml
+
+actor User as u
+participant Controller as a
+participant BookService as b
+database BookDao as d
+
+u -> a : search(q)
+activate a
+a->b:searchBookByName(name)/searchBookByType(type)
+
+activate b
+
+b->d:searchBookByName(name)/searchBookByType(type)
+
+activate d
+
+d-->b:book
+
+deactivate d
+
+b-->a:book
+deactivate b
+
+a-->u:book
+deactivate a
+
+@enduml
