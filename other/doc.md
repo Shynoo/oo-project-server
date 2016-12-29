@@ -4,11 +4,15 @@
 
 选题：图书管理系统
 
-| 学号 | 姓名 | 分工 |
-| -------- | ---- | ---- |
-| ... | ... | ...  |
-| 11310057 | 张宇 | 前端代码实现、后端 Controller 实现 |
-| 11310388 | 邓收港 | 后端代码实现、部分顺序图实现、单元测试及其活动图 |
+| 学号       | 姓名   | 分工                       |
+| -------- | ---- | ------------------------ |
+| 11310057 | 张宇   | 前端代码实现，后端 Controller 实现  |
+| 11310073 | 张凌祺  | 需求分析                     |
+| 11310082 | 欧泽彬  | 实体类、完整类图                 |
+| 11310116 | 孙佳明  | 设计模式                     |
+| 11310182 | 方致远  | 可扩展性分析                   |
+| 11310388 | 邓收港  | 后端代码实现，部分顺序图实现，单元测试及其活动图 |
+| 11410328 | 皮志成  | 用例图，用例分析文档               |
 
 ## 目录
 
@@ -199,7 +203,7 @@ public class UserBuilder{
 
 ![](顺序图/getAllBorrowingBooks.png)
 
-### 检查是否为Admin
+### 检查是否为 Admin
 
 ![](顺序图/isAdmin.png)
 
@@ -271,10 +275,10 @@ public class UserBuilder{
 
 ```Java
 @Test
-public void borrowBookTest(){
+public void borrowBookTest() {
     userService.borrowBook("1","CS121");
-    Book book=bookService.getBookById("CS121");
-    List ls=userService.getUserAllBorrowingBooks("1");
+    Book book = bookService.getBookById("CS121");
+    List ls = userService.getUserAllBorrowingBooks("1");
     Assert.assertTrue(ls.contains(book));
     Assert.assertTrue(book.getBookStatus().equals(BookStatus.IN_LIBIRARY));
 }
@@ -289,7 +293,7 @@ public void borrowBookTest(){
 public void userLogInTest(){
     String id = "1";
     String password = "123";
-    Result r = sampleConreoller.doLogin(id, password);
+    Result r = mainController.doLogin(id, password);
     User u = (User) r.get();
     Assert.assertEquals(u, userService.getUserById(id));
     Assert.assertTrue(userService.isOnline(u);
@@ -302,12 +306,12 @@ public void userLogInTest(){
 
 ### 加入修改图书信息的功能
 
-功能描述: 管理员可以修改图书的信息, 如图书 name, type 等.
+功能描述：管理员可以修改图书的信息, 如图书 name，type 等
 
 ### 解决方案
 
-1. 页面提供一个功能的入口, 让用户提交图书 id 和图书的新信息. 
-2. `Controller` 收到信息后调用 `UserService` 检查用户是否有修改图书信息的权限.
-3. `Controller` 调用 `BookService` 的 `updateBookInfo(Book book)` 方法.
+1. 页面提供一个功能的入口，让用户提交图书 id 和图书的新信息
+2. `Controller` 收到信息后调用 `UserService` 检查用户是否有修改图书信息的权限
+3. `Controller` 调用 `BookService` 的 `updateBookInfo(Book book)` 方法
 4. `BookService` 调用 `BookDao` 的 `updateBook(Book book)` 方法
 5. 修改图书信息成功 
