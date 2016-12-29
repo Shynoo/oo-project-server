@@ -1,0 +1,25 @@
+@startuml
+
+skinparam sequenceParticipant underline
+!include style.ptmono.iuml
+
+actor Admin as u
+participant Controller as a
+participant UserService as b
+database BookDao as d
+
+u -> a : addBook(userId, bookName, bookType)
+activate a
+a->b:addBook(user, book)
+
+activate b
+
+b->d:addBook(book)
+
+b-->a:result
+deactivate b
+
+a-->u:result
+deactivate a
+
+@enduml

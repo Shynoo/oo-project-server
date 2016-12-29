@@ -1,0 +1,6 @@
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam classBorderThickness 1
+skinparam defaultFontName PT Mono
+skinparam defaultFontSize 14
+hide circle

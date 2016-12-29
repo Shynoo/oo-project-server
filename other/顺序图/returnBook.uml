@@ -1,0 +1,25 @@
+@startuml
+
+skinparam sequenceParticipant underline
+!include style.ptmono.iuml
+
+actor User as u
+participant Controller as a
+participant "UserService" as b
+database BorrowingDao as d
+
+u -> a : return(bookId)
+activate a
+a->b:giveBackBook(bookId)
+
+activate b
+
+b->d:giveBack(bookId)
+
+b-->a:result
+deactivate b
+
+a-->u:result
+deactivate a
+
+@enduml
