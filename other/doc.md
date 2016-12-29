@@ -186,31 +186,36 @@ public class UserBuilder{
 ## 顺序图
 
 ### 登录
-ok
+![](顺序图/login.png)
 
 ### 查看个人信息
 deng
 
 
 ### 查看已借阅图书
-deng
+![](顺序图/getAllBorrowingBooks.png)
+
 
 ### 检查是否为Admin
-deng
+![](./顺序图/isAdmin.png)
+
 
 ### 所有用户列表
 
 ### 所有图书列表
+![](./顺序图/getAllBooks.png)
+
 
 ### 增加图书
 
 ### 删除图书
 
 ### 增加用户
-deng
+![](顺序图/addUser.png)
 
 ### 删除用户
-deng
+![](顺序图/deleteUser.png)
+
 
 ### 改变用户的类型
 ok

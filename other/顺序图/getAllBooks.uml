@@ -1,0 +1,49 @@
+@startuml
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+	ArrowColor DeepSkyBlue
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor blue
+	LifeLineBackgroundColor #A9DCDF
+	
+	ParticipantBorderColor DeepSkyBlue
+	ParticipantBackgroundColor DodgerBlue
+	ParticipantFontName Impact
+	ParticipantFontSize 17
+	ParticipantFontColor #A9DCDF
+	
+	ActorBackgroundColor aqua
+	ActorFontColor DeepSkyBlue
+	ActorFontSize 17
+	ActorFontName Aapex
+}
+
+actor User as u
+participant "MainController" as a
+participant "UserService" as b
+
+database BookDao as d1
+
+
+u -> a : getAllBooks()
+activate a
+a->b:getAllBooks()
+activate b
+
+b->d1:getAllBooks()
+activate d1
+d1-->b:Map<id,Book>
+deactivate d1
+
+b-->a: Map<id,Book>
+deactivate b
+
+
+a-->u:Map<id,Book>
+deactivate a
+
+
+@enduml
