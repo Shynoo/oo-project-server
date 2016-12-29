@@ -166,7 +166,7 @@ public class MainController{
             user = User.createAdvanceUser().id(account).name(userName).password(password).build();
             break;
         case "admin":
-            user = Admin.createAdminUser().id(account).name(userName).password(password).build();
+            user = ((Admin)userService.getUserById("admin")).createAdminUser().id(account).name(userName).password(password).build();
             break;
         }
         return userService.addUser(userService.getUserById("admin"), user).equals(ResultStatus.SUCCESS);
