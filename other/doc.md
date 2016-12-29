@@ -218,22 +218,24 @@ deng
 
 
 ### 改变用户的类型
-ok
+
+![](顺序图/changeUserType.png)
 
 ### feelLucky
-ok
+
+![](顺序图/feelLucky.png)
 
 ### 查找图书
-ok
+
+![](顺序图/searchBook.png)
 
 ### 借阅图书
-ok
+
+![](顺序图/borrowBook.png)
 
 ### 归还图书
-ok
 
-
-
+![](顺序图/returnBook.png)
 
 ## 完整类图
 
