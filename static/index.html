@@ -79,7 +79,7 @@
         }
 
         function doSearch() {
-            $('#results').fadeOut(300);
+            $('#results').fadeOut(500);
 
             setTimeout(function () {
                 let data = {};
@@ -95,7 +95,7 @@
                         console.log('ERROR: ', e);
                     }
                 });
-            }, 300);
+            }, 500);
         }
 
         function feelLucky() {
@@ -121,7 +121,7 @@
             if (data.length == 0) {
                 $('#results').append('<p id="no-result">Your search did not match any documents.</p>Suggestions:<ul><li>Make sure all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li></ul>');
             }
-            setTimeout("$('#results').fadeIn(300)", 300);
+            setTimeout("$('#results').fadeIn(500)", 500);
         }
 
         function animate() {
@@ -131,8 +131,8 @@
                 'line-height': '60px',
                 'margin-bottom': '8px'
             });
-            $('#btn-search').fadeOut(300);
-            $('#btn-lucky').fadeOut(300);
+            $('#btn-search').fadeOut(500);
+            $('#btn-lucky').fadeOut(500);
         }
 
         function borrow(bookId) {
